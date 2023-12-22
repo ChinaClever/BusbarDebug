@@ -45,7 +45,7 @@ void Dev_SiCfg::initData()
     initUnit("tem", ptr->tem);
     initUnit("pow", ptr->pow);
 
-    initUnit("zerocur", ptr->zerocur);////////////////////////////////
+    //initUnit("zerocur", ptr->zerocur);////////////////////////////////
 }
 
 void Dev_SiCfg::writeData()
@@ -57,7 +57,7 @@ void Dev_SiCfg::writeData()
     writeUnit("tem", ptr->tem);
     writeUnit("pow", ptr->pow);
 
-    writeUnit("zerocur", ptr->zerocur);/////////////////////////////////////
+    //writeUnit("zerocur", ptr->zerocur);/////////////////////////////////////
 }
 
 void Dev_SiCfg::initCfg()

@@ -787,7 +787,7 @@ void Ad_Resulting::setInsertValue()
     setInsertInfo();
     setInsertLineValue();
     setInsertEnvValue();
-    setInsertZeroLineValue();///////////////////////////////////////////////////
+    //setInsertZeroLineValue();///////////////////////////////////////////////////
 
 }
 
@@ -927,7 +927,7 @@ void Ad_Resulting::compareInsertValue()
     compareInsertLineValue();
     compareInsertEnvValue();
 
-    compareInsertZeroLineValue();///////////////////////////////////////////////////
+    //compareInsertZeroLineValue();///////////////////////////////////////////////////
 
     mPro->step = Test_vert;
 }

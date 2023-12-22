@@ -36,10 +36,10 @@ void Set_LineUnitWid::showAndHideWid(bool show)
     ui->totalpowMinSpin->setHidden(show);
     ui->label_15->setHidden(show);
     ui->totalpowMaxSpin->setHidden(show);
-//    ui->label_18->setHidden(show);/////////////////////////////////////////////////////////////////////////////
-//    ui->zerocurMinSpin->setHidden(show);
-//    ui->label_17->setHidden(show);
-//    ui->zerocurMaxSpin->setHidden(show);/////////////////////////////////////////////////////////////////////////////
+    ui->label_18->setHidden(show);/////////////////////////////////////////////////////////////////////////////
+    ui->zerocurMinSpin->setHidden(show);
+    ui->label_17->setHidden(show);
+    ui->zerocurMaxSpin->setHidden(show);/////////////////////////////////////////////////////////////////////////////
     ui->label_2->setHidden(show);
     ui->reMaxSpin->setHidden(show);
 }
