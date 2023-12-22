@@ -253,6 +253,14 @@ bool Dev_SiCtrl::setBusbarInsertTem(int index , int val1 , int val2)
     return ret;
 }
 
+bool Dev_SiCtrl::setBusbarInsertZeroLine(int val1 , int val2)
+{
+    bool ret = true;
+    ret = rtu_sent_ushortV3_buff(mItem->addr, PlugZeroLineMIN, 2 , val1 , val2);
+
+    return ret;
+}
+
 bool Dev_SiCtrl::setBusbarInsertCur(int index , int val1 , int val2)
 {
     bool ret = true;

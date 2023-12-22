@@ -44,11 +44,15 @@ public:
     void setInsertInfo();
     void setInsertLineValue();
     void setInsertEnvValue();
+    void setInsertZeroLineValue();
+    bool setStartCurtype();
 
     void compareInsertValue();
     void compareInsertInfo();
     void compareInsertLineValue();
     void compareInsertEnvValue();
+    void compareInsertZeroLineValue();
+
 protected:
     bool powErrRange(int exValue, int cur);
     bool curErrRange(int exValue, int cur);

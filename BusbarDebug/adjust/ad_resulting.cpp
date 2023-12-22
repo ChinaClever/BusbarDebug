@@ -381,6 +381,14 @@ void Ad_Resulting::setStartInfo()
     devip->SetInfo(devip->getResidualOid(), QString::number(mCfg->ip_residual));
 }
 
+bool Ad_Resulting::setStartCurtype()
+{
+    QString str = tr("更改始端箱电流规格为---标准！");
+    updatePro(str);
+    Dev_IpSnmp *devip = Dev_IpSnmp::bulid();
+    return devip->SetInfo(devip->getCurTpyeOid(), QString::number(0));
+}
+
 void Ad_Resulting::setStartLineValue()
 {
     Dev_IpSnmp *devip = Dev_IpSnmp::bulid();
@@ -764,11 +772,23 @@ void Ad_Resulting::setInsertEnvValue()
     }
 }
 
+void Ad_Resulting::setInsertZeroLineValue()
+{
+    QString info = tr("设置插接箱零线电流阈值信息！");
+    updatePro(info);
+    sObjCfg *it = &(mCfg->si_cfg);
+    int minVal = it->zerocur.min*it->zerocur.rate;
+    int maxVal = it->zerocur.max*it->zerocur.rate;
+    Dev_SiCtrl::bulid()->setBusbarInsertZeroLine(minVal ,maxVal);
+}
+
 void Ad_Resulting::setInsertValue()
 {
     setInsertInfo();
     setInsertLineValue();
     setInsertEnvValue();
+    setInsertZeroLineValue();///////////////////////////////////////////////////
+
 }
 
 void Ad_Resulting::compareInsertInfo()
@@ -874,10 +894,40 @@ void Ad_Resulting::compareInsertEnvValue()
     }
 }
 
+void Ad_Resulting::compareInsertZeroLineValue()
+{
+    sRtuUshortUnit *b = &(mPacket->share_mem_get()->box[mItem->addr-1].zeroLineCur);
+    sObjCfg *it = &(mCfg->si_cfg);
+    int expect = 0 ,curValue = 0;
+    double rate = it->zerocur.rate;
+    bool ret = false;
+    int idx = 1;
+    QString info = tr("对比插接箱零线电流阈值信息！");
+    updatePro(info);
+    QVector<int> ans;
+    ans.append(it->zerocur.min*it->zerocur.rate);
+    ans.append(it->zerocur.max*it->zerocur.rate);
+
+    QString str = tr("最小值");
+    for(int j = 0 ; j < 2; j++){
+        expect = (j % 2==0)?ans.at(0):ans.at(1);
+        curValue = (j % 2==0)?b->smin:b->smax;
+        str = (j % 2==0)?tr("最小值"):tr("最大值");
+        idx = j/2 + 1;
+        if(curValue == expect) ret = true;
+        info = tr("插接箱零线电流 %1 %2实际值：%3 ℃, 期待值：%4 ℃！")
+                .arg(idx).arg(str).arg(curValue/rate).arg(expect/rate);
+        updatePro(info,ret);ret = false;
+    }
+}
+
 void Ad_Resulting::compareInsertValue()
 {
     compareInsertInfo();
     compareInsertLineValue();
     compareInsertEnvValue();
+
+    compareInsertZeroLineValue();///////////////////////////////////////////////////
+
     mPro->step = Test_vert;
 }

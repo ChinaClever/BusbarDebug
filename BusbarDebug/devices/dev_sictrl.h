@@ -36,6 +36,7 @@ public:
     bool setBusbarInsertiOF(int val);
     bool setBusbarInsertBuzzer(int val);
     bool setBusbarInsertFilter(int val);
+    bool setBusbarInsertZeroLine(int val1 , int val2);
 
 
     bool rtu_sent_ushortV3_buff(uchar addr, ushort reg, uint num,  uint val1, uint val2);

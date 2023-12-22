@@ -37,6 +37,7 @@ protected:
     int rtu_plug_recv_env_data(uchar *ptr, Rtu_recv *msg , int index);
     int rtu_plug_recv_loop_alarm_data(uchar *ptr, Rtu_recv *msg , int index);
     int rtu_plug_recv_env_alarm_data(uchar *ptr, Rtu_recv *msg , int index);
+    int rtu_plug_recv_zero_data(uchar *ptr ,Rtu_recv *msg);
     bool rtu_recv_crc(uchar *buf, int len, Rtu_recv *msg);
 
     void loopData(sBoxData *box, Rtu_recv *pkt);

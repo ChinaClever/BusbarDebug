@@ -27,7 +27,7 @@ Ad_CoreThread *Ad_CoreThread::bulid(QObject *parent)
 bool Ad_CoreThread::workDown()
 {
     bool ret = true;
-
+    ret = mResult->setStartCurtype();
     ret = mAdjust->startAdjust();
 
     Dev_Object *dev = Dev_SiRtu::bulid();
@@ -35,11 +35,9 @@ bool Ad_CoreThread::workDown()
     if(mItem->modeId == START_BUSBAR){
         ret = Test_NetWork::bulid()->checkNet();
         if(!ret) mPro->step = Test_Fail;
-        if(mPro->step == Test_vert) {
-            ret = mResult->resEnter();
-            if(ret) mPro->step = Test_Seting;
-            else mPro->step = Test_Fail;
-        }
+        ret = mResult->resEnter();
+        if(ret) mPro->step = Test_Seting;
+        else mPro->step = Test_Fail;
         if(mPro->step == Test_Seting){
             ret = dev->readPduData();
             if(!ret) mPro->step = Test_Fail;
@@ -61,9 +59,8 @@ bool Ad_CoreThread::workDown()
                 mResult->compareInsertValue();
             }
         }
-        if(mPro->step == Test_vert) {
-            ret = mResult->resEnter();
-        } else if(mPro->step == Test_Over) {
+        ret = mResult->resEnter();
+        if(mPro->step == Test_Over) {
             ret = mResult->initRtuThread();
         }
     }

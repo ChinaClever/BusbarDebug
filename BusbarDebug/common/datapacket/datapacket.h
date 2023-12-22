@@ -216,6 +216,9 @@ enum  sSetPlugType{
     ,PlugPowerMAX_L9_1       = 243           //功率上限
     ,PlugPowerMAX_L9_2       = 244           //功率上限
 
+    ,PlugZeroLineMIN       = 247           //零线电流下限
+    ,PlugZeroLineMAX       = 248           //零线电流上限
+
 };
 
 /**
