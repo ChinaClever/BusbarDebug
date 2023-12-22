@@ -53,6 +53,9 @@ public:
     void compareInsertEnvValue();
     void compareInsertZeroLineValue();
 
+    bool eleErrRange0(int i);
+    bool compareEle0();
+
 protected:
     bool powErrRange(int exValue, int cur);
     bool curErrRange(int exValue, int cur);

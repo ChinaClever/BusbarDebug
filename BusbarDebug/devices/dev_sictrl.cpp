@@ -98,6 +98,21 @@ bool Dev_SiCtrl::setDev()
     return ret;
 }
 
+void Dev_SiCtrl::eleClean()
+{
+    if(mItem->modeId == START_BUSBAR){
+        for(int i = 0 ; i < START_LINE_NUM ; i++){
+            setBusbarStartEle(i+1); // 清除电能
+            delay(6);//12
+        }
+    }else{
+        for(int i = 0 ; i < mDataBusbar->box[mItem->addr - 1].loopNum ; i++){
+            setBusbarInsertEle(i+1); // 清除电能
+            delay(7);
+        }
+    }
+}
+
 bool Dev_SiCtrl::clearEle()
 {
     return sentRtuCmd(0x1013, 0x00F0); // 清除电能

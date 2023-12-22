@@ -14,6 +14,7 @@ public:
     bool unClock();
     bool clearEle();
     bool factorySet();
+    void eleClean();
 
     bool setCurTh(int i);
     bool setVolTh(int i);

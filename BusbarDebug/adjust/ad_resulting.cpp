@@ -454,6 +454,7 @@ void Ad_Resulting::setStartValue()
     setStartOtherValue();
     setStartEnvValue();
     setStartMACAddress();
+    Dev_SiCtrl::bulid()->eleClean();
 }
 
 QString Ad_Resulting::changeCurType(int index)
@@ -716,6 +717,34 @@ void Ad_Resulting::compareStartMac()
     }
 }
 
+bool Ad_Resulting::eleErrRange0(int i)
+{
+    QString str = tr("电能 L%1，实测电能=%2Kwh").arg(i+1).arg(mDataBusbar->box[mItem->addr-1].data.ele[i]/COM_RATE_ELE);
+    bool ret = false;
+    if(0 != mDataBusbar->box[mItem->addr-1].data.ele[i]) {
+        str += tr("错误");
+        ret = false;
+    } else {
+        str += tr("正常");
+        ret = true;
+    }
+    updatePro(str, ret);
+    return ret;
+}
+
+bool Ad_Resulting::compareEle0()
+{
+    int i = 0;
+    bool ret = true , res = true;
+    for(; i<mDataBusbar->box[mItem->addr-1].loopNum; ++i) {
+        ret = eleErrRange0(i); if(!ret) res = false;
+    }
+    QString str = tr("清除电能");
+    if(res) str += tr("成功"); else str += tr("L%1 失败").arg(i);
+    updatePro(str, res);
+    return res;
+}
+
 void Ad_Resulting::compareStartValue()
 {
     compareStartInfo();
@@ -723,6 +752,8 @@ void Ad_Resulting::compareStartValue()
     compareStartOtherValue();
     compareStartEnvValue();
     compareStartMac();
+    compareEle0();
+
     mPro->step = Test_vert;
 }
 
@@ -787,6 +818,8 @@ void Ad_Resulting::setInsertValue()
     setInsertInfo();
     setInsertLineValue();
     setInsertEnvValue();
+
+    Dev_SiCtrl::bulid()->eleClean();
     //setInsertZeroLineValue();///////////////////////////////////////////////////
 
 }
@@ -926,6 +959,7 @@ void Ad_Resulting::compareInsertValue()
     compareInsertInfo();
     compareInsertLineValue();
     compareInsertEnvValue();
+    compareEle0();
 
     //compareInsertZeroLineValue();///////////////////////////////////////////////////
 
