@@ -33,6 +33,8 @@ private slots:
     void on_setBtn_clicked();
     void on_typeComboBox_currentIndexChanged(int index);
 
+    void on_userEdit_textChanged(const QString &arg1);
+
 public slots:
     void errSlot() {QTimer::singleShot(5,this,SLOT(saveErrSlot()));}
 

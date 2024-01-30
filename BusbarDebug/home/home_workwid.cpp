@@ -11,6 +11,7 @@ Home_WorkWid::Home_WorkWid(QWidget *parent) :
     ui(new Ui::Home_WorkWid)
 {
     ui->setupUi(this);
+    mPro = sDataPacket::bulid()->getPro();
     QTimer::singleShot(450,this,SLOT(initFunSlot()));
 }
 
@@ -43,6 +44,7 @@ void Home_WorkWid::initFunSlot()
     timer = new QTimer(this);
     timer->start(500);
     connect(timer, SIGNAL(timeout()), this, SLOT(timeoutDone()));
+    connect(Json_Pack::bulid(this), &Json_Pack::httpSig, this, &Home_WorkWid::insertTextSlot);
     mCoreThread = new Test_CoreThread(this);
     ui->label_9->hide();
     ui->typeComboBox->hide();
@@ -71,6 +73,12 @@ void Home_WorkWid::insertText()
         mPro->status.removeFirst();
         mPro->pass.removeFirst();
     }
+}
+
+void Home_WorkWid::insertTextSlot(QString str , bool ret)
+{
+    mPro->itemName<<str;
+    mPro->uploadPass<<ret;
 }
 
 void Home_WorkWid::updateCnt()
@@ -147,16 +155,26 @@ void Home_WorkWid::updateResult()
 void Home_WorkWid::updateWid()
 {
     QString str = mDt->sn;
+    sObjData *obj = &(mDev->data);
     if(str.isEmpty()) str = "--- ---";
     ui->snLab->setText(str);
+    mPro->productSN = str;
 
-    str = mItem->modeId == START_BUSBAR?tr("始端箱"):tr("插接箱");
+    // str = mItem->modeId == START_BUSBAR?tr("始端箱"):tr("插接箱");
+    str = mDt->dev_type;
+    mPro->productType = str;
     if(str.isEmpty()) str = "--- ---";
     int ver = mDataBusbar->box[mItem->addr-1].version;
     if(ver != 0)str += "  版本："+QString::number(ver/100)+"."+QString::number(ver/10%10)+"."+QString::number(ver%10);
     ui->devLab->setText(str);
+    mPro->softwareVersion = QString::number(ver/100)+"."+QString::number(ver/10%10)+"."+QString::number(ver%10);
+
     ui->userLab->setText(mItem->user);
+    mPro->clientName = mItem->user;
+
+
     ui->cntLab->setNum(mItem->cnt.cnt);
+
     if(mPro->step < Test_Over) {
         updateTime();
     } else if(mPro->step < Test_End){
@@ -193,6 +211,7 @@ bool Home_WorkWid::initSerial()
     if(ui->modeBox->currentIndex() == 0){
         ret2 = checkCtrlSourcePort();
     }
+    mPro->PCB_Code = ui->pcbEdit->text();
     ret = ret1 & ret2;
     return ret;
 }
@@ -203,7 +222,7 @@ bool Home_WorkWid::initWid()
     bool ret = initSerial();
     if(ret) {
         if(mItem->user.isEmpty()) {
-            MsgBox::critical(this, tr("请先填写客户名称！")); return false;
+            MsgBox::critical(this, tr("请先填写工单号！")); return false;
         }
         if(mItem->cnt.cnt < 1) {
             MsgBox::critical(this, tr("请先填写订单剩余数量！")); return false;
@@ -222,6 +241,7 @@ bool Home_WorkWid::initWid()
 
         mId = 1;
         mPacket->init();
+        mPro->testStartTime = QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss");
         ui->textEdit->clear();
         ui->modeBox->setEnabled(false);
         ui->groupBox_4->setEnabled(false);
@@ -235,7 +255,11 @@ bool Home_WorkWid::initWid()
 void Home_WorkWid::on_startBtn_clicked()
 {
     if(mPro->step == Test_End) {
-        if(initWid()) mCoreThread->start();
+        if(!ui->pcbEdit->text().isEmpty()){
+            if(initWid()) mCoreThread->start();
+        }else{
+            MsgBox::critical(this, tr("请先填写pcb码！"));
+        }
     } else {
         bool ret = MsgBox::question(this, tr("确定需要提前结束？"));
         if(ret) {
@@ -255,3 +279,9 @@ void Home_WorkWid::on_downBtn_clicked()
     Yc_Obj::bulid()->get()->setCur(0);
     Yc_Obj::bulid()->get()->setVol(0);
 }
+
+void Home_WorkWid::on_pcbEdit_textChanged(const QString &arg1)
+{
+    ui->pcbEdit->setClearButtonEnabled(1);
+}
+

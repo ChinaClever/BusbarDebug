@@ -403,12 +403,35 @@ struct sProgress
     sProgress() {step=0;}
 
     uchar step; // 步骤
+    uchar recordstep; // 记录启动步骤
     QString time;
     QList<bool> pass;
     QStringList status;
 
     uchar result;    // 最终结果
     QTime startTime;
+    QString softwareType;
+    QString companyName;
+    QString protocolVersion;
+
+    QString productType;
+    QString productSN;
+    QString macAddress;
+    QString gnd;
+    QString ir;
+    QString dcw;
+    QString acw;
+    QString pn;
+    // uchar softwareVersion;
+    QString softwareVersion;
+    QString clientName;
+    QString testTime;
+    QString testStartTime;
+    QString testEndTime;
+    QStringList no, itemName;
+    QList<bool> uploadPass;
+    uchar uploadPassResult;
+    QString PCB_Code;//pcb码
 };
 
 
@@ -621,7 +644,6 @@ public:
     void share_mem_init();
     void share_mem_free();
     void share_mem_del();
-
 private:
     sDevData *dev;
     sProgress *pro;

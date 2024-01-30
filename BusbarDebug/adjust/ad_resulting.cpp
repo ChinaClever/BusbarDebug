@@ -441,7 +441,7 @@ void Ad_Resulting::setStartMACAddress()
 {
     Dev_IpSnmp *devip = Dev_IpSnmp::bulid();
     if( mDataBusbar->box[mItem->addr-1].mac.contains("ff:ff:ff:ff:ff:ff")
-            || !mDataBusbar->box[mItem->addr-1].mac.contains("2c:26:5f:") ){
+        || !mDataBusbar->box[mItem->addr-1].mac.contains("2c:26:5f:")){
         Test_NetWork::bulid()->addMacAddr1();
         devip->SetInfo(devip->getMACAddress(), mItem->mac);
     }

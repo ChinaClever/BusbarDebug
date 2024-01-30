@@ -39,6 +39,8 @@ private slots:
     void on_startBtn_clicked();
     void on_upBtn_clicked();
     void on_downBtn_clicked();
+    void insertTextSlot(QString str , bool ret);
+    void on_pcbEdit_textChanged(const QString &arg1);
 
 private:
     Ui::Home_WorkWid *ui;

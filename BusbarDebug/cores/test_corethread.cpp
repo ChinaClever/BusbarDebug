@@ -33,7 +33,6 @@ bool Test_CoreThread::setDev()
         ret = mCtrl->setDev();
         if(mCfg->si_led) return ret;
     }
-
     if(ret) ret = mSn->snEnter();
     return ret;
 }
@@ -101,12 +100,17 @@ void Test_CoreThread::workResult()
     QString str = tr("最终结果 ");
     if(mPro->result != Test_Fail) {
         str += tr("通过");
+        mPro->uploadPassResult = 1;
     } else {
         res = false;
         str += tr("失败");
+        mPro->uploadPassResult = 0;
     }
 
     updatePro(str, res, 2);
+
+    sleep(2);
+    Json_Pack::bulid()->http_post("debugdata/add","192.168.1.12");//全流程才发送记录(http)
     mPro->step = Test_Over;
 }
 
@@ -117,7 +121,7 @@ bool Test_CoreThread::initFun()
     bool ret = false;
     if(mItem->modeId == 0){
         ret = mYc->powerOn(50);
-        sleep(25);
+        sleep(25);     
     }else if(mItem->modeId == 1){
         ret = mYc->powerOn();
         sleep(5);
@@ -182,6 +186,7 @@ void Test_CoreThread::run()
     //    devip->readPduData();
     //    Ad_Resulting::bulid()->compareInsertValue();
     //    BaseLogs::bulid()->start();
+    mPro->recordstep = mPro->step;
     switch (mPro->step) {
     case Test_Start: allTest(); break;
     case Test_Collect: collectData(); break;

@@ -1,7 +1,5 @@
 #ifndef OBJECTTHREAD_H
 #define OBJECTTHREAD_H
-
-#include "datapacket.h"
 #include "rtu_modbus.h"
 
 class BaseObject

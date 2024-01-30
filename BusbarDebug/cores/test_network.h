@@ -3,6 +3,7 @@
 #include "baselogs.h"
 #include "sn_serialnum.h"
 #include "udprecvsocket.h"
+#include "json_pack.h"
 
 class Test_NetWork : public BaseThread
 {
@@ -27,6 +28,7 @@ private:
     bool mac;
     UdpRecvSocket *mUdp;
     QProcess *mProcess;
+    sProgress *mPro;
 };
 
 #endif // TEST_NETWORK_H
