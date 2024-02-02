@@ -44,8 +44,9 @@ void Dev_SiCfg::initData()
 
     initUnit("tem", ptr->tem);
     initUnit("pow", ptr->pow);
-
+#if ZHIJIANGINSERTBOXZERO==1
     initUnit("zerocur", ptr->zerocur);////////////////////////////////
+#endif
 }
 
 void Dev_SiCfg::writeData()
@@ -56,8 +57,9 @@ void Dev_SiCfg::writeData()
 
     writeUnit("tem", ptr->tem);
     writeUnit("pow", ptr->pow);
-
+#if ZHIJIANGINSERTBOXZERO==1
     writeUnit("zerocur", ptr->zerocur);/////////////////////////////////////
+#endif
 }
 
 void Dev_SiCfg::initCfg()

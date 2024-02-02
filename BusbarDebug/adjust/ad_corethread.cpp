@@ -27,12 +27,12 @@ Ad_CoreThread *Ad_CoreThread::bulid(QObject *parent)
 bool Ad_CoreThread::workDown()
 {
     bool ret = true;
-    ret = mResult->setStartCurtype();
-    ret = mAdjust->startAdjust();
 
     Dev_Object *dev = Dev_SiRtu::bulid();
     if(mItem->modeId == START_BUSBAR) dev = Dev_IpSnmp::bulid();
     if(mItem->modeId == START_BUSBAR){
+        ret = mResult->setStartCurtype();
+        ret = mAdjust->startAdjust();
         ret = Test_NetWork::bulid()->checkNet();
         if(!ret) mPro->step = Test_Fail;
         ret = mResult->resEnter();
@@ -48,6 +48,7 @@ bool Ad_CoreThread::workDown()
             }
         }
     }else{
+        ret = mAdjust->startAdjust();
         if(mPro->step == Test_Seting){
             ret = dev->readPduData();
             if(!ret) mPro->step = Test_Fail;

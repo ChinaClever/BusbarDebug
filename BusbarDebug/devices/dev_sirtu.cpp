@@ -601,7 +601,9 @@ bool Dev_SiRtu::rtu_recv_packetV3(uchar *buf, int len, Rtu_recv *pkt)
                 ptr += rtu_plug_recv_env_alarm_data(ptr , pkt , i);
             for(int i = 0 ; i < RTU_LOOP_NUM ; ++i) // 读取loop alarm数据
                 ptr += rtu_plug_recv_loop_alarm_data(ptr , pkt , i);
+#if ZHIJIANGINSERTBOXZERO==1
             ptr += rtu_plug_recv_zero_data(ptr , pkt);
+#endif
 
         }
         pkt->crc = (buf[RTU_SENT_LEN_V30*2+6-1]*256) + buf[RTU_SENT_LEN_V30*2+6-2]; // RTU_SENT_LEN_V23*2+5

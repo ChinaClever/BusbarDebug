@@ -787,8 +787,9 @@ void Ad_Resulting::setInsertValue()
     setInsertInfo();
     setInsertLineValue();
     setInsertEnvValue();
+#if ZHIJIANGINSERTBOXZERO==1
     setInsertZeroLineValue();///////////////////////////////////////////////////
-
+#endif
 }
 
 void Ad_Resulting::compareInsertInfo()
@@ -927,7 +928,8 @@ void Ad_Resulting::compareInsertValue()
     compareInsertLineValue();
     compareInsertEnvValue();
 
+#if ZHIJIANGINSERTBOXZERO==1
     compareInsertZeroLineValue();///////////////////////////////////////////////////
-
+#endif
     mPro->step = Test_vert;
 }
