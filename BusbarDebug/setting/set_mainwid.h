@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "set_workwid.h"
+#include "set_temper.h"
 
 namespace Ui {
 class Set_MainWid;
@@ -24,6 +25,7 @@ private:
     Set_IpWid *mIpWid;
     Set_SiWid *mSiWid;
     Set_WorkWid *mWorkWid;
+    Set_temper *mtemper;
 };
 
 #endif // SET_MAINWID_H

@@ -25,7 +25,17 @@ struct RtuUshortUnit {
     uchar salarm;
     uchar scrAlarm; // 临界告警值
 };
+struct RtuCurUintUnit {
+    uint svalue;
+    uint smin;
+    uint smax;//剩余电流时，存储报警界限值
 
+    uint scrMin; // 临界最小值
+    uint scrMax; // 临界最大值
+    uchar supalarm;
+    uchar salarm;
+    uchar scrAlarm; // 临界告警值
+};
 struct RtuUintUnit {
     uint ivalue;
     uint imin;
@@ -41,7 +51,7 @@ struct RtuUintUnit {
 
 struct RtuRecvLine {
     RtuUshortUnit vol; // 电压
-    RtuUshortUnit cur; // 电流
+    RtuCurUintUnit cur; // 电流
     RtuUshortUnit lineVol; // 线电压
     RtuUintUnit pow; //有功功率
     uint apPow; // 视在功率
@@ -90,7 +100,7 @@ struct Rtu_recv {
     RtuRecvEnv  env[RTU_TH_NUM];
     RtuUintUnit totalPow; //总有功功率
     RtuUshortUnit reCur;//剩余电流
-    RtuUshortUnit zeroLineCur;//零线电流
+    RtuCurUintUnit zeroLineCur;//零线电流
     RtuUshortUnit rate;//频率
     ushort volThd[RTU_THD_NUM][40];
     ushort curThd[RTU_THD_NUM][40];

@@ -121,13 +121,17 @@ bool Test_CoreThread::initFun()
     bool ret = false;
     if(mItem->modeId == 0){
         ret = mYc->powerOn(50);
-        sleep(25);     
-    }else if(mItem->modeId == 1){
+        sleep(25);
+    }else if(mItem->modeId == 1){//插接箱
         ret = mYc->powerOn();
         sleep(5);
+        if(ret) ret = setDev();//设置序列号
+        if(ret) ret = readDev();
     }
-    else{
+    else{//温度传感器
         ret = mYc->powerOn(0);
+        if(ret) ret = setDev();//设置序列号
+        if(ret) ret = readDev();
     }
 
     return ret;
@@ -173,7 +177,8 @@ void Test_CoreThread::allTest()
 void Test_CoreThread::run()
 {
     if(mItem->modeId == START_BUSBAR)mDt->devType = START_BUSBAR;
-    else mDt->devType = INSERT_BUSBAR;
+    else if(mItem->modeId == INSERT_BUSBAR)mDt->devType = INSERT_BUSBAR;
+    else if(mItem->modeId == TEMPER_BUSBAR)mDt->devType = TEMPER_BUSBAR;
     if(isRun) return; else isRun = true;
     //    Dev_IpSnmp *devip = Dev_IpSnmp::bulid();
     //    devip->readPduData();

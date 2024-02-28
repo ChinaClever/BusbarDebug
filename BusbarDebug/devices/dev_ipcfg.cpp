@@ -34,6 +34,9 @@ void Dev_IpCfg::initType()
     ptr->ip_shunt = read("ip_shunt", 0).toInt();
     ptr->ip_residual = read("ip_residual", 0).toInt();
     ptr->ip_lightning = read("ip_lightning", 0).toInt();
+
+
+
 }
 
 void Dev_IpCfg::writeType()
@@ -50,7 +53,6 @@ void Dev_IpCfg::writeType()
     write("ip_shunt", ptr->ip_shunt);
     write("ip_residual", ptr->ip_residual);
     write("ip_lightning", ptr->ip_lightning);
-
 }
 
 void Dev_IpCfg::initData()

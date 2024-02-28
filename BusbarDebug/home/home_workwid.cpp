@@ -163,10 +163,11 @@ void Home_WorkWid::updateWid()
     // str = mItem->modeId == START_BUSBAR?tr("始端箱"):tr("插接箱");
     str = mDt->dev_type;
     mPro->productType = str;
+    ui->devLab->setText(str);
+
     if(str.isEmpty()) str = "--- ---";
     int ver = mDataBusbar->box[mItem->addr-1].version;
     if(ver != 0)str += "  版本："+QString::number(ver/100)+"."+QString::number(ver/10%10)+"."+QString::number(ver%10);
-    ui->devLab->setText(str);
     mPro->softwareVersion = QString::number(ver/100)+"."+QString::number(ver/10%10)+"."+QString::number(ver%10);
 
     ui->userLab->setText(mItem->user);

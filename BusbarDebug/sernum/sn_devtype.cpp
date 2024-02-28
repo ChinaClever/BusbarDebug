@@ -78,6 +78,13 @@ int Sn_DevType::getDevType(const QString &str)
           else mDt->version = IP_PDUV1;
         }
     }
+    if(str.contains("IDC-BUSBAR")) {
+        ret = IDC_BUSBAR;
+        if(str.contains("插接箱")) ret = INSERT_BUSBAR;
+        else if(str.contains("温度传感器"))ret = TEMPER_BUSBAR;
+        else if(str.contains("始端箱"))ret = START_BUSBAR;
+    }
+
 
     return ret;
 }
@@ -125,6 +132,7 @@ int Sn_DevType::getSceenType(const QString &str)
     if(str.contains("断码屏")) ret = 1;
     if(str.contains("数码管")) ret = 2;
     if(str.contains("断码屏") && str.contains("V1")) ret = 3;
+
     return ret;
 }
 

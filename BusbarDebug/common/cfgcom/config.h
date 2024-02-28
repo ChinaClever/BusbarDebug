@@ -11,8 +11,10 @@ enum eDevTypes {
     ZPDU,
     RPDU,
     ATS,
+    IDC_BUSBAR,
     START_BUSBAR=0,
     INSERT_BUSBAR,
+    TEMPER_BUSBAR,//测温模块
 
     AC = 1, // 交流
     DC,     // 直流

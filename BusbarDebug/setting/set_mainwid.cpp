@@ -36,4 +36,9 @@ void Set_MainWid::initWid()
     ui->tabWidget->addTab(mSiWid, tr("插接箱参数设置"));
     connect(mSiWid, SIGNAL(errSig()), mWorkWid, SLOT(errSlot()));
     connect(mWorkWid, SIGNAL(enabledSig(bool)), mSiWid, SLOT(enabledSlot(bool)));
+
+    mtemper = new Set_temper(ui->tabWidget);
+    ui->tabWidget->addTab(mtemper, tr("温度模块阈值设置"));
+    connect(mtemper, SIGNAL(errSig()), mWorkWid, SLOT(errSlot()));
+    connect(mWorkWid, SIGNAL(enabledSig(bool)), mtemper, SLOT(enabledSlot(bool)));
 }

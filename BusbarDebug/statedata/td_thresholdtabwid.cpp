@@ -116,8 +116,24 @@ void Td_ThresholdTabWid::setDataUnit(sBoxData *unit)
     addList(0 , &(unit->rate) ,  rate , suffix , str , r );
     rate = COM_RATE_CUR; suffix = "A"; str = tr("剩余电流"); r = 2;
     addList(1 , &(unit->reCur) ,  rate , suffix , str , r );
+
     rate = COM_RATE_CUR; suffix = "A"; str = tr("零线电流"); r = 2;
-    addList(2 , &(unit->zeroLineCur) ,  rate , suffix , str , r );
+    // addList(2 , &(unit->zeroLineCur) ,  rate , suffix , str , r );
+    QStringList listStr1;
+    listStr1 << str;
+    listStr1 << QString::number(unit->zeroLineCur.svalue/rate,'f',r)+suffix;
+    listStr1 << QString::number(unit->zeroLineCur.smin/rate,'f',r)+suffix;
+    listStr1 << QString::number(unit->zeroLineCur.smax/rate,'f',r)+suffix;
+    setTableRow(2, listStr1);
+
+    if((unit->zeroLineCur.svalue < unit->zeroLineCur.smin) || (unit->zeroLineCur.svalue > unit->zeroLineCur.smax)) {
+        unit->zeroLineCur.salarm = 2;
+        setAlarmBackgroundColor(2);
+    } else {
+        unit->zeroLineCur.salarm = 0;
+        setNormalBackgroundColor(2);
+    }
+
     rate = COM_RATE_POW; suffix = "kW"; str = tr("总功率"); r = 3;
     QStringList listStr;
     listStr << str;

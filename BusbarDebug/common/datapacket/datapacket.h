@@ -9,7 +9,7 @@
 
 // 倍率定义
 #define COM_RATE_VOL	10.0    // 电压
-#define COM_RATE_CUR	100.0    // 电流
+#define COM_RATE_CUR	1000.0    // 电流
 #define COM_RATE_POW	1000.0  // 功率
 #define COM_RATE_ELE	10.0    // 电能
 #define COM_RATE_PF     100.0   // 功率因数
@@ -350,6 +350,13 @@ struct sTypeCfg
     QString ip_inSecond;
     QString ip_outFirst;
     QString ip_outSecond;
+
+    //四个温度
+    double temMax[4];
+    double temMin[4];
+    uchar tem_buzzer;
+    uchar tem_filter;
+
 };
 
 struct sDevType
@@ -492,7 +499,17 @@ struct sRtuUshortUnit {
     uchar salarm;
     uchar scrAlarm; // 临界告警值
 };
+struct sRtuUnit {
+    uint svalue;
+    uint smin;
+    uint smax;//剩余电流时，存储报警界限值
 
+    uint scrMin; // 临界最小值
+    uint scrMax; // 临界最大值
+    uchar supalarm;
+    uchar salarm;
+    uchar scrAlarm; // 临界告警值
+};
 struct sRtuULLintUnit {
     unsigned long long ivalue;
     unsigned long long imin;
@@ -530,7 +547,8 @@ typedef struct _sDataPowUnit {
 typedef struct _sObjectData {
     int lineNum; //相数
     sDataValue vol; // 电压
-    sDataValue cur;  // 电流
+    // sDataValue cur;  // 电流
+    sDataPowUnit cur;
     sDataValue lineVol;  // 线电压
 
     sDataPowUnit pow; // 功率
@@ -591,7 +609,7 @@ typedef struct _sBoxData {
     int ratedCur; // 额定电流
     sRtuUshortUnit rate;//新频率
     sRtuUshortUnit reCur;//剩余电流
-    sRtuUshortUnit zeroLineCur;//零线电流
+    sRtuUnit zeroLineCur;//零线电流
     sRtuULLintUnit totalPow; //总有功功率
     char dc; // 交直流标志位
     uchar lpsState; // 防雷状态 1：工作正常   2：损坏

@@ -47,7 +47,7 @@ bool Ad_CoreThread::workDown()
                 mResult->compareStartValue();
             }
         }
-    }else{
+    }else if(mItem->modeId == INSERT_BUSBAR){
         if(mPro->step == Test_Seting){
             ret = dev->readPduData();
             if(!ret) mPro->step = Test_Fail;
@@ -59,12 +59,22 @@ bool Ad_CoreThread::workDown()
                 mResult->compareInsertValue();
             }
         }
-        ret = mResult->resEnter();
-        if(mPro->step == Test_Over) {
-            ret = mResult->initRtuThread();
-        }
-    }
+    }else if(mItem->modeId == TEMPER_BUSBAR){
+        ret = dev->readPduData();
+        //设置温度基本信息（蜂鸣器、告警滤波）
+        mResult->setEnvInfo();
+        //温度模块设置阈值
+        mResult->setEnvValue();
 
+        //对比阈值信息
+        dev->readPduData();
+        mResult->compareEnvInfo();
+        mResult->compareEnvValue();//温度阈值
+    }
+    ret = mResult->resEnter();
+    if(mPro->step == Test_Over) {
+        ret = mResult->initRtuThread();
+    }
     return ret;
 }
 

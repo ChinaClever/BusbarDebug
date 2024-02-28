@@ -184,7 +184,7 @@
       <string>A</string>
      </property>
      <property name="decimals">
-      <number>2</number>
+      <number>3</number>
      </property>
      <property name="maximum">
       <double>63.000000000000000</double>
@@ -237,7 +237,7 @@
       <string>A</string>
      </property>
      <property name="decimals">
-      <number>2</number>
+      <number>3</number>
      </property>
      <property name="maximum">
       <double>700.000000000000000</double>
@@ -805,7 +805,7 @@
       <string>A</string>
      </property>
      <property name="decimals">
-      <number>2</number>
+      <number>3</number>
      </property>
      <property name="maximum">
       <double>63.000000000000000</double>
@@ -858,7 +858,7 @@
       <string>A</string>
      </property>
      <property name="decimals">
-      <number>2</number>
+      <number>3</number>
      </property>
      <property name="maximum">
       <double>700.000000000000000</double>
