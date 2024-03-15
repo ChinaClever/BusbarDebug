@@ -35,7 +35,7 @@ void Set_temper::initType()
     ui->tem_maxSpinBox_4->setValue(dt->temMax[3]);
 
     ui->buzzer_comboBox->setCurrentIndex(dt->tem_buzzer);
-    ui->filter_comboBox->setCurrentIndex(dt->tem_filter);
+    ui->filter_comboBox->setCurrentIndex(dt->tem_filter - 2);
 
 }
 void Set_temper::updateType()
@@ -51,6 +51,7 @@ void Set_temper::updateType()
     dt->temMax[3] = ui->tem_maxSpinBox_4->value();
     dt->tem_buzzer = ui->buzzer_comboBox->currentIndex();
     dt->tem_filter = ui->filter_comboBox->currentIndex();
+    dt->tem_filter = ui->filter_comboBox->currentIndex() + 2;
 }
 bool Set_temper::inputCheck()
 {

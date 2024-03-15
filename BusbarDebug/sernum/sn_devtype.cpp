@@ -41,7 +41,8 @@ QString Sn_DevType::getMpdu(uint id)
 
 QString Sn_DevType::getDevStr(uint id)
 {
-    QString res = getMpdu(id);
+    // QString res = getMpdu(id);
+    QString res;
     if(res.isEmpty()) {
         res = Json_Recv::bulid()->getDevTypeByID(id);
     }

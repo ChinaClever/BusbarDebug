@@ -215,17 +215,17 @@ bool Test_SiThread::setDev()
 {
     bool ret = initDev();
     if(ret) ret = readDev();
-    if(mPro->step <= Test_Seting) {
-        if(ret) ret = clearEle();
-        if(ret) ret = setData();
-        if(ret) ret = checkLine();
-        //if(ret) ret = setAlarm();
-        if(ret) ret = setHorizontalOrVertical();
-        if(ret) ret = factorySet();
-    } else {
-        if(mPro->step > Test_Collect)
-            ret = delay(10);
-    }
+    // if(mPro->step <= Test_Seting) {
+    //     if(ret) ret = clearEle();
+    //     if(ret) ret = setData();
+    //     if(ret) ret = checkLine();
+    //     //if(ret) ret = setAlarm();
+    //     if(ret) ret = setHorizontalOrVertical();
+    //     if(ret) ret = factorySet();
+    // } else {
+    //     if(mPro->step > Test_Collect)
+    //         ret = delay(10);
+    // }
 
     return ret;
 }

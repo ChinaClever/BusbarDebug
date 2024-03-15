@@ -26,13 +26,13 @@ void Test_CoreThread::initFunSlot()
 bool Test_CoreThread::setDev()
 {
     bool ret = true;
-    if(mItem->modeId) {
-        if(mPro->step > Test_Seting) ret = delay(6);
-        else ret = Test_NetWork::bulid()->startProcess();
-    } else {
-        ret = mCtrl->setDev();
-        if(mCfg->si_led) return ret;
-    }
+    // if(mItem->modeId) {
+    //     if(mPro->step > Test_Seting) ret = delay(6);
+    //     else ret = Test_NetWork::bulid()->startProcess();
+    // } else {
+    //     ret = mCtrl->setDev();
+    //     if(mCfg->si_led) return ret;
+    // }
     if(ret) ret = mSn->snEnter();
     return ret;
 }
@@ -97,20 +97,22 @@ void Test_CoreThread::workResult()
 {
     BaseLogs::bulid()->start();
     bool res = mYc->powerDown();
+    // sleep(2);
+    // Json_Pack::bulid()->http_post("debugdata/add","192.168.1.12");//全流程才发送记录(http)
+
     QString str = tr("最终结果 ");
     if(mPro->result != Test_Fail) {
         str += tr("通过");
         mPro->uploadPassResult = 1;
+        // mPro->result = Test_Over;
     } else {
         res = false;
         str += tr("失败");
         mPro->uploadPassResult = 0;
+        // mPro->result = Test_Fail;
     }
 
     updatePro(str, res, 2);
-
-    sleep(2);
-    Json_Pack::bulid()->http_post("debugdata/add","192.168.1.12");//全流程才发送记录(http)
     mPro->step = Test_Over;
 }
 
@@ -126,12 +128,13 @@ bool Test_CoreThread::initFun()
         ret = mYc->powerOn();
         sleep(5);
         if(ret) ret = setDev();//设置序列号
-        if(ret) ret = readDev();
+        // if(ret) ret = readDev();
     }
-    else{//温度传感器
+    else if(mItem->modeId == 2){//温度传感器
         ret = mYc->powerOn(0);
+        sleep(5);
         if(ret) ret = setDev();//设置序列号
-        if(ret) ret = readDev();
+        // if(ret) ret = readDev();
     }
 
     return ret;

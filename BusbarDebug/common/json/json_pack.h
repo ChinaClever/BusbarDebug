@@ -2,6 +2,7 @@
 #define JSONPACK_H
 #include "datapacket.h"
 #include "http/httpclient.h"
+#include "baseobject.h"
 
 class Json_Pack:public QObject
 {

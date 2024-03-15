@@ -31,7 +31,6 @@ bool Ad_Resulting::curErrRange(int exValue, int cur)
     //    int max = (exValue + mItem->curErr * 10);
     int min = (exValue - err);
     int max = (exValue + err);
-    qDebug()<<"cur "<<cur<<"min "<<min<<"max "<<max;
     if((cur >= min) && (cur <= max )) {
         ret =  true;
     }
@@ -937,7 +936,7 @@ void Ad_Resulting::compareEnvValue()
 
     bool ret = false;
     int idx = 1;
-    QString info = tr("对比插接箱温度阈值信息！");
+    QString info = tr("对比温度模块阈值信息！");
     updatePro(info);
 
     QString str = tr("最小值");

@@ -361,7 +361,7 @@ struct sTypeCfg
 
 struct sDevType
 {
-    uchar devId;
+    uint devId;
     uchar devType; // 0 SI-PDU  1 IP-PDU
     uchar screen;//0 液晶 1 断码屏 2 数码管 3 V1和断码屏
     uchar lines;

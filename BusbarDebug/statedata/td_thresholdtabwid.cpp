@@ -26,7 +26,7 @@ void Td_ThresholdTabWid::initWid()
 void Td_ThresholdTabWid::change(double &rate , QString &suffix , QString &str , int &r)
 {
     switch (m_index) {
-    case 0:{rate = COM_RATE_CUR;suffix = "A";str = tr("电流");r = 2;
+    case 0:{rate = COM_RATE_CUR;suffix = "A";str = tr("电流");r = 3;
     }break;
     case 1:{rate = COM_RATE_VOL;suffix = "V";str = tr("电压");r = 1;
     }break;
@@ -117,7 +117,7 @@ void Td_ThresholdTabWid::setDataUnit(sBoxData *unit)
     rate = COM_RATE_CUR; suffix = "A"; str = tr("剩余电流"); r = 2;
     addList(1 , &(unit->reCur) ,  rate , suffix , str , r );
 
-    rate = COM_RATE_CUR; suffix = "A"; str = tr("零线电流"); r = 2;
+    rate = COM_RATE_CUR; suffix = "A"; str = tr("零线电流"); r = 3;
     // addList(2 , &(unit->zeroLineCur) ,  rate , suffix , str , r );
     QStringList listStr1;
     listStr1 << str;

@@ -64,6 +64,11 @@
           <string>600 A</string>
          </property>
         </item>
+        <item>
+         <property name="text">
+          <string>800 A</string>
+         </property>
+        </item>
        </widget>
       </item>
       <item row="0" column="2">

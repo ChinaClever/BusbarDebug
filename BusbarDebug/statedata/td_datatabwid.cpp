@@ -34,12 +34,12 @@ void Td_DataTabWid::appendItem(sObjectData *unit)
         else{
             if(2 == unit->sw[i]) listStr << tr("开"); else if(1 == unit->sw[i])  listStr << tr("关");
         }
-        listStr << QString::number(unit->cur.value[i]/COM_RATE_CUR,'f',2)+"A";
+        listStr << QString::number(unit->cur.value[i]/COM_RATE_CUR,'f',3)+"A";
         listStr << QString::number(unit->vol.value[i]/COM_RATE_VOL,'f',1)+"V";
         listStr << QString::number(unit->pow.value[i]/COM_RATE_POW,'f',3)+"kW";
         listStr << QString::number(unit->ele[i]/COM_RATE_ELE,'f',1)+"kWh";
         if(unit->cur.valued[i])
-            listStr << QString::number(unit->cur.valued[i]/COM_RATE_CUR,'f',2)+"A";
+            listStr << QString::number(unit->cur.valued[i]/COM_RATE_CUR,'f',3)+"A";
         else
             listStr << "---";
         if(unit->pow.valued[i])

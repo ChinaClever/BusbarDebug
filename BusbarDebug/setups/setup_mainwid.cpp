@@ -31,10 +31,10 @@ void Setup_MainWid::initFunSlot()
     initLogCount();
     mUserWid = new UserMainWid(ui->stackedWid);
     ui->stackedWid->addWidget(mUserWid);
-    QTimer::singleShot(2*1000,this,SLOT(checkPcNumSlot()));
 
     QDate buildDate = QLocale(QLocale::English ).toDate( QString(__DATE__).replace("  ", " 0"), "MMM dd yyyy");
     ui->label_date->setText(buildDate.toString("yyyy-MM-dd"));
+    QTimer::singleShot(2*1000,this,SLOT(checkPcNumSlot()));
 }
 
 

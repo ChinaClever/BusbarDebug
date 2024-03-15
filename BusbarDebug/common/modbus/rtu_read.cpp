@@ -86,10 +86,11 @@ int Rtu_Read::rtuRecvSIData(uchar *ptr, sRtuReplyItem *pkt)
 
 int Rtu_Read::rtuRecvIPData(uchar *ptr, sRtuReplyItem *pkt)
 {
-//    pkt->addr = *(ptr++);// 从机地址码
-//    pkt->fn = *(ptr++);  /*功能码*/
+   // pkt->addr = *(ptr++);// 从机地址码
+   // pkt->fn = *(ptr++);  /*功能码*/
+
     pkt->len = (ptr[2]) * 256 + (ptr[3]) + 6; /*数据长度*/
-//    ptr+=2; /*IP-PDU数据长度*/
+   // ptr += 3;
     if(pkt->len < MODBUS_RTU_SIZE) {
         for(int i=0; i<pkt->len; ++i) {
             pkt->data[i] = *(ptr++);
@@ -118,11 +119,39 @@ int Rtu_Read::rtuRead(sRtuItem *pkt, sRtuReplyItem *recv)
 
     return rtn;
 }
+int Rtu_Read::rtuReadSn(sRtuItem *pkt, sRtuReplyItem *recv)
+{
+    uchar sendBuf[64]={0}, recvBuf[MODBUS_RTU_SIZE]={0};
+    int rtn = rtuPacket(pkt, sendBuf);
+    rtn = transmit(sendBuf, rtn, recvBuf, 3);
 
+    if(rtn > 0) {
+        bool ret = recvCrc(recvBuf, rtn, recv);
+        if(ret) {
+            rtn = rtuRecvSIData(recvBuf, recv);
+        } else {
+            rtn = 0;
+        }
+    }
+
+    return rtn;
+}
 int Rtu_Read::read(sRtuItem &pkt, uchar *recv)
 {
     sRtuReplyItem item;
     int ret = rtuRead(&pkt, &item);
+    if(ret > 0) {
+        for(int i=0; i<ret; ++i) {
+            recv[i] = item.data[i];
+        }
+    }
+
+    return ret;
+}
+int Rtu_Read::readSn(sRtuItem &pkt, uchar *recv)
+{
+    sRtuReplyItem item;
+    int ret = rtuReadSn(&pkt, &item);
     if(ret > 0) {
         for(int i=0; i<ret; ++i) {
             recv[i] = item.data[i];

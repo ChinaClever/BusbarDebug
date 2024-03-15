@@ -71,19 +71,25 @@ bool Test_NetWork::addMacAddr1()
 
 void Test_NetWork::updateMacAddr(int step)
 {
-    BaseLogs::bulid()->writeMac(mItem->mac);
-    mPro = sDataPacket::bulid()->getPro();
-    MacAddr *mac = MacAddr::bulid();
-    // mItem->mac = mac->macAdd(mItem->mac, step);
-    QString url = "mac/test?work_order=%1&serial_id=%2";
-    url = url.arg(mPro->clientName).arg(mPro->productSN);
-    sleep(1);
-    QString temp = Json_Pack::bulid()->http_get(url,"192.168.1.12");
-    QJsonDocument jsonDoc = QJsonDocument::fromJson(temp.toUtf8());
-    QJsonObject jsonObj = jsonDoc.object();
-    mItem->mac = jsonObj["mac_address"].toString();
-    mPro->macAddress = mItem->mac;
-    Cfg::bulid()->write("mac", mItem->mac, "Mac");
+    if(mItem->mac.size() > 5) {
+        BaseLogs::bulid()->writeMac(mItem->mac);
+        MacAddr *mac = MacAddr::bulid();
+        mItem->mac = mac->macAdd(mItem->mac, step);
+        Cfg::bulid()->write("mac", mItem->mac, "Mac");
+    }
+
+    // BaseLogs::bulid()->writeMac(mItem->mac);
+    // mPro = sDataPacket::bulid()->getPro();
+    // MacAddr *mac = MacAddr::bulid();
+    // QString url = "mac/test?work_order=%1&serial_id=%2";
+    // url = url.arg(mPro->clientName).arg(mPro->productSN);
+    // sleep(1);
+    // QString temp = Json_Pack::bulid()->http_get(url,"192.168.1.12");
+    // QJsonDocument jsonDoc = QJsonDocument::fromJson(temp.toUtf8());
+    // QJsonObject jsonObj = jsonDoc.object();
+    // mItem->mac = jsonObj["mac_address"].toString();
+    // mPro->macAddress = mItem->mac;
+    // Cfg::bulid()->write("mac", mItem->mac, "Mac");
 }
 
 void Test_NetWork::workDown()

@@ -41,11 +41,7 @@ bool Sn_DevId::analysDevType(uchar *buf, int len)
     }
 
     ret = mTypeDef->analysDevType(id);
-    if(ret){
-        mDt->devId = id;
-    } else {
-        str = tr("不支持此设备类型 ID：%1").arg(id,0,16);
-    }
+    if(!ret) str = tr("不支持此设备类型 ID：%1").arg(id, 0, 16);
 
     return updatePro(str, ret);
 }
@@ -58,7 +54,7 @@ bool Sn_DevId::readDevId()
     int len = 0;
     static uchar recv[256] = {0};
     for(int i=0; i<5; ++i) {
-        len = mModbus->read(it, recv);
+        len = mModbus->readSn(it, recv);
         if(len==4) break; else if(!delay(3+i)) break;
         if(i>3) mModbus->changeBaudRate();
     }

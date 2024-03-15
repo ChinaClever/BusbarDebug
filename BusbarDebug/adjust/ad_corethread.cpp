@@ -59,6 +59,11 @@ bool Ad_CoreThread::workDown()
                 mResult->compareInsertValue();
             }
         }
+        if(mPro->step == Test_vert) {
+            ret = mResult->resEnter();
+        } else if(mPro->step == Test_Over) {
+            ret = mResult->initRtuThread();
+        }
     }else if(mItem->modeId == TEMPER_BUSBAR){
         ret = dev->readPduData();
         //设置温度基本信息（蜂鸣器、告警滤波）
@@ -71,10 +76,7 @@ bool Ad_CoreThread::workDown()
         mResult->compareEnvInfo();
         mResult->compareEnvValue();//温度阈值
     }
-    ret = mResult->resEnter();
-    if(mPro->step == Test_Over) {
-        ret = mResult->initRtuThread();
-    }
+
     return ret;
 }
 

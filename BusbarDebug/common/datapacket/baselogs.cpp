@@ -19,7 +19,8 @@ bool BaseLogs::writeMac()
 {
     sMacItem it;
 
-    it.dev = mDt->dev_type.split("_").first();
+    // it.dev = mDt->dev_type.split("_").first();
+    it.dev = mDt->dev_type;
     // it.dev = tr("始端箱");
     it.user = mItem->user;
     it.sn = mDt->sn;
@@ -77,7 +78,8 @@ bool BaseLogs::writeLog()
     Db_Tran db;
     sLogItem it;
 
-    it.dev = mDt->dev_type.split("_").first();
+    // it.dev = mDt->dev_type.split("_").first();
+    it.dev = mDt->dev_type;
     // if(mItem->modeId == START_BUSBAR)it.dev = tr("始端箱");
     // else it.dev = tr("插接箱");
     it.op = user_land_name();
@@ -109,7 +111,8 @@ bool BaseLogs::writeLog()
 
 bool BaseLogs::initItem(sStateItem &it)
 {
-    it.dev = mDt->dev_type.split("_").first();
+    // it.dev = mDt->dev_type.split("_").first();
+    it.dev = mDt->dev_type;
     // if(mItem->modeId == START_BUSBAR)it.dev = tr("始端箱");
     // else it.dev = tr("插接箱");
     it.user = mItem->user;
@@ -132,7 +135,8 @@ void BaseLogs::writeLogs()
 
 bool BaseLogs::initValueItem(sValueItem &it)
 {
-    it.dev = mDt->dev_type.split("_").first();
+    // it.dev = mDt->dev_type.split("_").first();
+    it.dev = mDt->dev_type;
     it.user = mItem->user;
     it.sn = mDt->sn;
 

@@ -90,10 +90,11 @@ bool Sn_SerialNum::readSn(sSnItem &itSn)
     static uchar buf[256] = {0};
     QString str = tr("序列号读取");
 
-    initDevType(itSn);
+
     initReadCmd(itRtu);
-    int len = mModbus->read(itRtu, buf);
-    if(8 != len) len = mModbus->read(itRtu, buf);
+    int len = mModbus->readSn(itRtu, buf);
+
+    if(8 != len) len = mModbus->readSn(itRtu, buf);
     if(len == 8) {
         ret = analySn(buf, len, itSn); toSnStr(itSn);
         if(ret) str += tr("成功");
@@ -179,6 +180,7 @@ bool Sn_SerialNum::snEnter()
 {
     bool ret = mTypeId->readDevType();
     if(ret) {
+        initDevType(mSnItem);
         ret = readSn(mSnItem);
         if(!ret && mSnItem.sn.size()) {
             ret = writeSn(mSnItem);
