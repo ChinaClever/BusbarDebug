@@ -40,7 +40,24 @@ bool Yc_Obj::powerOn(int v)
 
     return updatePro(str, ret, 7);
 }
+bool Yc_Obj::powerOn(double v)
+{
+    YC_StandSource *yc = get(); yc->setVol(220);
+    QString str = tr("连接标准源");
+    bool ret = yc->handShake();
+    if(!ret) {
+        str = tr("再次连接标准源");
+        ret = yc->handShake();
+    }
+    if(ret) str += tr("成功"); else str += tr("失败");
+    updatePro(str, ret);
 
+    str = tr("标准源上电");
+    if(ret) ret = yc->powerOn(v);
+    if(ret) str += tr("成功"); else str += tr("失败");
+
+    return updatePro(str, ret, 7);
+}
 bool Yc_Obj::powerDown()
 {
     YC_StandSource *yc = get();

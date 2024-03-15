@@ -464,6 +464,7 @@ QString Ad_Resulting::changeCurType(int index)
     case 1:str = tr("250 A");break;
     case 2:str = tr("400 A");break;
     case 3:str = tr("650 A");break;
+    case 4:str = tr("800 A");break;
     default:str = tr("标准");break;
     }
     return str;

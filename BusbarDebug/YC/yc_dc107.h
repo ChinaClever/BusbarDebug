@@ -12,6 +12,7 @@ public:
 
     bool handShake();
     bool setCur(int v, int sec=0);
+    bool setCur_a(double v, int sec=0){return true;}
     bool setVol(int v, int sec=0);
 
 protected:

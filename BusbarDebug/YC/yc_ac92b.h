@@ -13,11 +13,12 @@ public:
     bool handShake();
     bool setCur(int v, int sec=0);
     bool setVol(int v, int sec=0);
-
+    bool setCur_a(double v, int sec=0);
 protected:
     bool initFun();
     bool setRange();
     bool setValue(const QString &str, int v);
+    bool setValue_a(const QString &str, double v);
     bool serialWrite(const QByteArray &array);
 };
 

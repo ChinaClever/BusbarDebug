@@ -122,7 +122,8 @@ bool Test_CoreThread::initFun()
     updatePro(tr("即将开始"));
     bool ret = false;
     if(mItem->modeId == 0){
-        ret = mYc->powerOn(50);
+        double set = 2.5;
+        ret = mYc->powerOn(set);
         sleep(25);
     }else if(mItem->modeId == 1){//插接箱
         ret = mYc->powerOn();

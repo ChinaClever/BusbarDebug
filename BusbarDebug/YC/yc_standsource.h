@@ -10,11 +10,13 @@ protected:
     explicit YC_StandSource(QObject *parent = nullptr);
 public:
     virtual bool powerOn(int v=60);  // 上电
+    bool powerOn(double v);
     virtual bool powerDown(); // 下电
     virtual bool powerReset(); //
 
     virtual bool setCur(int v, int sec=0)=0;
     virtual bool setVol(int v, int sec=0)=0;
+    virtual bool setCur_a(double v, int sec=0)=0;
     virtual bool handShake()=0;
     int acOrDc;
 

@@ -13,6 +13,7 @@ public:
 
     bool powerOn(int v=60);
     bool powerDown();
+    bool powerOn(double v);
 
     bool setCur(int v, int sec=0);
     bool setVol(int v, int sec=0);
