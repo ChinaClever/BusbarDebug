@@ -123,6 +123,7 @@ void Td_ThresholdTabWid::setDataUnit(sBoxData *unit)
     listStr1 << str;
     listStr1 << QString::number(unit->zeroLineCur.svalue/rate,'f',r)+suffix;
     listStr1 << QString::number(unit->zeroLineCur.smin/rate,'f',r)+suffix;
+    // listStr1 << "---";
     listStr1 << QString::number(unit->zeroLineCur.smax/rate,'f',r)+suffix;
     setTableRow(2, listStr1);
 

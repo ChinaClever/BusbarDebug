@@ -403,6 +403,8 @@ enum {
     Test_Standard=0,
     Test_AI=1,
     Test_Onebyone=2,
+    Test_SettingStart=4,
+    Test_SettingInsert=5
 };
 
 struct sProgress

@@ -4,7 +4,7 @@
  *      Author: Lzy
  */
 #include "ad_resulting.h"
-#define AD_CUR_RATE 100
+#define AD_CUR_RATE 1000
 #include <QDateTime>
 #include "cores/test_network.h"
 
@@ -151,7 +151,7 @@ bool Ad_Resulting::eachCurCheck(int k, int exValue)
 {
     bool ret = true;
     double value = mItem->vol*exValue/AD_CUR_RATE/1000.0;
-    if(AC == mDt->ac) value = value*0.5;
+    value = value*0.5;
     QString str = tr("校验数据: 期望电流%1A 功率%2kW").arg(exValue/AD_CUR_RATE).arg(value);
     updatePro(str);
     for(int i=0; i<5; ++i) {
@@ -271,13 +271,15 @@ bool Ad_Resulting::workDown(int exValue)
 bool Ad_Resulting::noLoadCurCheck(int cnt)
 {
     bool res = true;
+    int count = 5;
+    if( mObj->lineNum > 3 ) count = count *((mObj->lineNum + 1)/ 3);
     for(int k=0; k<mObj->lineNum; ++k) {
         mObj->pow.valued[k] = mObj->pow.value[k];
         mObj->cur.valued[k] = mObj->cur.value[k];
         QString str = tr("空载校验: 第%1相 ").arg(k+1);
         if(mObj->cur.value[k] || mObj->pow.value[k]) {
             res = false;
-            if(cnt > 3) {
+            if(cnt > count - 2) {
                 mObj->cur.status[k] = Test_Fail;
                 if(mObj->cur.value[k]) str += tr("电流有底数");
                 if(mObj->pow.value[k]) str += tr("功率有底数");
@@ -296,7 +298,9 @@ bool Ad_Resulting::noLoadCurCheck(int cnt)
 bool Ad_Resulting::noLoadCurFun()
 {
     bool ret = true;
-    for(int i=0; i<5; ++i) {
+    int count = 5;
+    if( mObj->lineNum > 3)  count = count *((mObj->lineNum + 1)/ 3);
+    for(int i=0; i<count; ++i) {
         QString str = tr("空载校验: 第%1次检查").arg(i+1);
         if(i)updatePro(str, true, 5); else delay(6);
         mCollect->readPduData();
@@ -413,6 +417,7 @@ void Ad_Resulting::setStartOtherValue()
     QVector<int> ans = getStartOtherValue();
 
     for(int j = 0 ; j < 19 - 13 + 1; j++){
+        if( j == 2 ) continue;
         QString str = devip->getOtherMinOid(j);
         devip->SetInfo(str, QString::number(ans.at(j)));
     }
@@ -581,8 +586,8 @@ QVector<int> Ad_Resulting::getStartOtherValue()
     sObjCfg *it = &(mCfg->ip_cfg);
     QVector<int> ans;
     ans.append(it->recur.max*it->recur.rate);
-    ans.append(it->zerocur.min*it->zerocur.rate);
     ans.append(it->zerocur.max*it->zerocur.rate);
+    ans.append(it->zerocur.min*it->zerocur.rate);
     ans.append(it->totalpow.min*it->totalpow.rate);
     ans.append(it->totalpow.max*it->totalpow.rate);
     ans.append(it->hz.min*it->hz.rate);
@@ -658,8 +663,8 @@ void Ad_Resulting::compareStartOtherValue()
             name = tr("剩余电流") ; str = tr("最大值") ; r = tr("A");
             rate = it->recur.rate;
         }else if( i <= 2){
-            curValue = (i % 2)?b->zeroLineCur.smin:b->zeroLineCur.smax;
-            name = tr("零线电流") ; r = tr("A");
+            curValue = (i % 2)?b->zeroLineCur.smax:b->zeroLineCur.smin;
+            name = tr("零线电流") ; str = tr("最大值") ;r = tr("A");
             rate = it->zerocur.rate;
         }else if( i <= 4){
             curValue = (i % 2)?b->totalPow.imin:b->totalPow.imax;
@@ -671,6 +676,7 @@ void Ad_Resulting::compareStartOtherValue()
             rate = it->hz.rate;
         }
         expect = ans.at(i);
+        if(i == 2) continue;
         check(name , str , r , rate , curValue , expect);
     }
 }

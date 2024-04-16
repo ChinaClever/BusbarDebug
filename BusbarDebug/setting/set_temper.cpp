@@ -50,7 +50,6 @@ void Set_temper::updateType()
     dt->temMax[2] = ui->tem_maxSpinBox_3->value();
     dt->temMax[3] = ui->tem_maxSpinBox_4->value();
     dt->tem_buzzer = ui->buzzer_comboBox->currentIndex();
-    dt->tem_filter = ui->filter_comboBox->currentIndex();
     dt->tem_filter = ui->filter_comboBox->currentIndex() + 2;
 }
 bool Set_temper::inputCheck()

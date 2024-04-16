@@ -48,7 +48,7 @@ int Rtu_Serial::transmit10(uchar *sent, int len, uchar *recv, int secs)
     int rtn = 0;
     bool ret = writeSerial(sent, len);
     if(ret) {
-        sleep(10);
+        sleep(12);
         rtn = readSerial(recv, secs);
     }
 

@@ -27,12 +27,13 @@ Ad_CoreThread *Ad_CoreThread::bulid(QObject *parent)
 bool Ad_CoreThread::workDown()
 {
     bool ret = true;
-    ret = mResult->setStartCurtype();
-    ret = mAdjust->startAdjust();
+
 
     Dev_Object *dev = Dev_SiRtu::bulid();
     if(mItem->modeId == START_BUSBAR) dev = Dev_IpSnmp::bulid();
     if(mItem->modeId == START_BUSBAR){
+        ret = mResult->setStartCurtype();
+        ret = mAdjust->startAdjust();
         ret = Test_NetWork::bulid()->checkNet();
         if(!ret) mPro->step = Test_Fail;
         ret = mResult->resEnter();
@@ -48,6 +49,7 @@ bool Ad_CoreThread::workDown()
             }
         }
     }else if(mItem->modeId == INSERT_BUSBAR){
+        ret = mAdjust->startAdjust();
         if(mPro->step == Test_Seting){
             ret = dev->readPduData();
             if(!ret) mPro->step = Test_Fail;
@@ -77,6 +79,42 @@ bool Ad_CoreThread::workDown()
         mResult->compareEnvValue();//温度阈值
     }
 
+    return ret;
+}
+
+bool Ad_CoreThread::settingInsert()
+{
+    bool ret = false;
+    Dev_Object *dev = Dev_SiRtu::bulid();
+    ret = dev->readPduData();
+    if(!ret) mPro->step = Test_Fail;
+    else{
+        mResult->setInsertValue();
+        int n = 3;
+        while(n--)
+            dev->readPduData();
+        mResult->compareInsertValue();
+    }
+    if(mPro->step == Test_vert) mPro->result = Test_Pass;
+    else mPro->result = Test_Fail;
+    mPro->step = Test_Over;
+    return ret;
+}
+
+bool Ad_CoreThread::settingStart()
+{
+    bool ret = false;
+    Dev_Object *dev = Dev_IpSnmp::bulid();
+    ret = dev->readPduData();
+    if(!ret) mPro->step = Test_Fail;
+    else{
+        mResult->setStartValue();
+        dev->readPduData();
+        mResult->compareStartValue();
+    }
+    if(mPro->step == Test_vert) mPro->result = Test_Pass;
+    else mPro->result = Test_Fail;
+    mPro->step = Test_Over;
     return ret;
 }
 

@@ -250,7 +250,7 @@ bool Home_WorkWid::initWid()
         ui->textEdit->clear();
         ui->modeBox->setEnabled(false);
         ui->groupBox_4->setEnabled(false);
-        mPro->step = (ui->modeBox->currentIndex()==0)?Test_Start:Test_Collect;
+        mPro->step = (ui->modeBox->currentIndex()==0)?Test_Start:ui->modeBox->currentIndex()+2;
         if(mPro->step == Test_Start) isCheck = true; else isCheck = false;
     }
 

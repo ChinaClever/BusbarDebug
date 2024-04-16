@@ -20,6 +20,8 @@ public:
         return ret;
     }
     bool startAdjust() {return workDown();}
+    bool settingInsert();
+    bool settingStart();
 
 protected:
     bool workDown();

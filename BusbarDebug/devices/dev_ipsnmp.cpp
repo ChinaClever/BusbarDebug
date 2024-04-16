@@ -252,7 +252,7 @@ void Dev_IpSnmp::startBoxBaseInfo(QString id , QString val)
     case 12: t->iOF = val.toUInt(&ok);break;
     case 13: t->isd = val.toUInt(&ok);break;
     case 14: t->shuntRelease = val.toUInt(&ok);break;
-    case 15: t->lpsState = val.toUInt(&ok);break;
+    case 15: t->reState = val.toUInt(&ok);break;
     default: break;
     }
 }
@@ -282,8 +282,8 @@ void Dev_IpSnmp::startBoxEleParaInfo(QString id ,QString val)
     case 11: t->volUnbalance = (uint)val.toUInt(&ok);break;
     case 12: t->curUnbalance = (uint)val.toUInt(&ok);break;
     case 13: t->reCur.smax = (val.toFloat()*(short)COM_RATE_CUR);break;
-    case 14: t->zeroLineCur.smin = (uint)(val.toFloat()*(short)COM_RATE_CUR);break;
-    case 15: t->zeroLineCur.smax = (uint)(val.toFloat()*(short)COM_RATE_CUR);break;
+    case 14: t->zeroLineCur.smax = (uint)(val.toFloat()*(short)COM_RATE_CUR);break;
+    case 15:
     case 16: t->totalPow.imin = (unsigned long long)(val.toFloat()*(short)COM_RATE_POW);break;
     case 17: t->totalPow.imax = (unsigned long long)(val.toFloat()*(short)COM_RATE_POW);break;
     case 18: t->rate.smin = (val.toUInt(&ok));break;
@@ -351,7 +351,7 @@ void Dev_IpSnmp::loopMsInformation(QString id ,QString val)
         case 2:  t->lineVol.upalarm[line] = val.toUInt(&ok);break;
         case 3:  t->vol.value[line] = val.toFloat(&ok)*(short)COM_RATE_VOL;break;
         case 4:  t->vol.upalarm[line] = val.toUInt(&ok);break;
-        case 5:  t->cur.value[line] = (uint)val.toFloat(&ok)*(short)COM_RATE_CUR;break;
+        case 5:  t->cur.value[line] = (uint)(val.toFloat(&ok)*(short)COM_RATE_CUR);break;
         case 6:  t->cur.upalarm[line] = val.toUInt(&ok);break;
         case 7:  t->pow.value[line] = (uint)(val.toFloat(&ok)*(short)COM_RATE_POW);break;
         case 8:  t->pow.upalarm[line] = val.toUInt(&ok);break;

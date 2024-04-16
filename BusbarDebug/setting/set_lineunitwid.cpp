@@ -42,12 +42,17 @@ void Set_LineUnitWid::showAndHideWid(bool show)
     ui->zerocurMaxSpin->setHidden(show);/////////////////////////////////////////////////////////////////////////////
     ui->label_2->setHidden(show);
     ui->reMaxSpin->setHidden(show);
+
+    ui->zerocurMinSpin->hide();
+    ui->label_17->hide();
 }
 
 void Set_LineUnitWid::init(sObjCfg *obj , int index)
 {
     mIndex = index;
     mDev = obj;
+    ui->zerocurMinSpin->hide();
+    ui->label_17->hide();
     ui->curMinSpin->setValue(obj->cur.min);
     ui->curMaxSpin->setValue(obj->cur.max);
     ui->volMinSpin->setValue(obj->vol.min);

@@ -199,6 +199,8 @@ void Test_CoreThread::run()
     switch (mPro->step) {
     case Test_Start: allTest(); break;
     case Test_Collect: collectData(); break;
+    case Test_SettingStart:Ad_CoreThread::bulid()->settingStart();break;
+    case Test_SettingInsert:Ad_CoreThread::bulid()->settingInsert();break;
     }
 
     isRun = false;
