@@ -39,6 +39,7 @@ void Set_SiWid::initType()
     ui->buzzerBox->setCurrentIndex(dt->si_buzzer);
     ui->filterBox->setCurrentIndex(dt->si_filter-2);
     ui->iOFBox->setCurrentIndex(dt->si_iOF);
+    ui->phaseBox->setCurrentIndex(dt->si_phaseflag);
 }
 
 void Set_SiWid::updateType()
@@ -48,7 +49,7 @@ void Set_SiWid::updateType()
     dt->si_buzzer = ui->buzzerBox->currentIndex();
     dt->si_filter = ui->filterBox->currentIndex()+2;
     dt->si_iOF = ui->iOFBox->currentIndex();
-
+    dt->si_phaseflag = ui->phaseBox->currentIndex();
 }
 
 bool Set_SiWid::inputCheck()

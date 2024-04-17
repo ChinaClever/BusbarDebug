@@ -115,6 +115,7 @@ enum  sSetPlugType{
     ,SetPlugiOF              = 5           //0:没有 1:有
     ,SetPlugBuzzer           = 6           //0:开启 1:关闭
     ,SetPlugAlarmTime        = 7            //2-5
+    ,SetPlugPhase            = 9            //单相/三相
 
     ,SetPlugEle_1   = 30           //电能清零
     ,SetPlugEle_2   = 45
@@ -318,6 +319,7 @@ struct sTypeCfg
     uchar si_iOF;
     uchar si_buzzer;
     uchar si_filter;
+    uchar si_phaseflag;//单相或者是三相
     sObjCfg si_cfg;
 
     uchar ip_bytepassword;
@@ -629,6 +631,7 @@ typedef struct _sBoxData {
     ushort rtuLen;
     //uchar rtuArray[SRC_DATA_LEN_MAX];
     QString mac;
+    uchar phaseFlag;// 单相或者三相
 }sBoxData;
 
 

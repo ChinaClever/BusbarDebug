@@ -26,6 +26,61 @@
       <string>插接箱参数设置区</string>
      </property>
      <layout class="QGridLayout" name="gridLayout">
+      <item row="3" column="1">
+       <widget class="QComboBox" name="filterBox">
+        <property name="minimumSize">
+         <size>
+          <width>120</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>160</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="editable">
+         <bool>false</bool>
+        </property>
+        <item>
+         <property name="text">
+          <string>2</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>3</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>4</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>5</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_8">
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>蜂鸣器</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
       <item row="2" column="1">
        <widget class="QComboBox" name="buzzerBox">
         <property name="minimumSize">
@@ -52,8 +107,8 @@
         </item>
        </widget>
       </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="label_7">
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_9">
         <property name="maximumSize">
          <size>
           <width>100</width>
@@ -61,23 +116,7 @@
          </size>
         </property>
         <property name="text">
-         <string>波特率</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="label_8">
-        <property name="maximumSize">
-         <size>
-          <width>100</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>蜂鸣器</string>
+         <string>断路器iOF触点</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -110,8 +149,8 @@
         </item>
        </widget>
       </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="label_9">
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_7">
         <property name="maximumSize">
          <size>
           <width>100</width>
@@ -119,7 +158,7 @@
          </size>
         </property>
         <property name="text">
-         <string>断路器iOF触点</string>
+         <string>波特率</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -162,45 +201,6 @@
         </item>
        </widget>
       </item>
-      <item row="3" column="1">
-       <widget class="QComboBox" name="filterBox">
-        <property name="minimumSize">
-         <size>
-          <width>120</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>160</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="editable">
-         <bool>false</bool>
-        </property>
-        <item>
-         <property name="text">
-          <string>2</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>3</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>4</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>5</string>
-         </property>
-        </item>
-       </widget>
-      </item>
       <item row="3" column="0">
        <widget class="QLabel" name="label_11">
         <property name="maximumSize">
@@ -215,6 +215,30 @@
         <property name="alignment">
          <set>Qt::AlignCenter</set>
         </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>单相/三相</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QComboBox" name="phaseBox">
+        <item>
+         <property name="text">
+          <string>单相</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>三相</string>
+         </property>
+        </item>
        </widget>
       </item>
      </layout>

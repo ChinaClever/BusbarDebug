@@ -741,6 +741,7 @@ void Ad_Resulting::setInsertInfo()
     //Dev_SiCtrl::bulid()->setBusbarInsertBaud(mCfg->si_baud+1);
     Dev_SiCtrl::bulid()->setBusbarInsertBuzzer(mCfg->si_buzzer);
     Dev_SiCtrl::bulid()->setBusbarInsertFilter(mCfg->si_filter);
+    Dev_SiCtrl::bulid()->setBusbarInsertPhase(mCfg->si_phaseflag);
 }
 void Ad_Resulting::setEnvInfo()
 {
@@ -843,6 +844,12 @@ void Ad_Resulting::compareInsertInfo()
     if(curValue == expect) ret = true;
     str = tr("插接箱iOF触点实际值：%1 , 期待值：%2！").arg(curValue?tr("有"):tr("无")).arg(expect?tr("有"):tr("无"));
     updatePro(str,ret);ret = false;
+
+    curValue = b->phaseFlag;
+    expect = mCfg->si_phaseflag;
+    if(curValue == expect) ret = true;
+    str = tr("插接箱单相或三相实际值：%1 , 期待值：%2！").arg(curValue).arg(expect);
+    updatePro(str,ret);ret = false;
 }
 void Ad_Resulting::compareInsertLineValue()
 {
@@ -917,20 +924,20 @@ void Ad_Resulting::compareInsertEnvValue()
 }
 void Ad_Resulting::compareEnvInfo()
 {
-    QString str = tr("对比温度传感器基本信息！");
+    QString str = tr("对比温度模块基本信息！");
     updatePro(str);
     sBoxData* b = &(mPacket->share_mem_get()->box[mItem->addr-1]);
     bool ret = false;
     int curValue = b->buzzerStatus;
     int expect = mCfg->tem_buzzer;
     if(curValue == expect) ret = true;
-    str = tr("插接箱蜂鸣器实际值：%1 , 期待值：%2！").arg(curValue?tr("关闭"):tr("开启")).arg(expect?tr("关闭"):tr("开启"));
+    str = tr("温度模块蜂鸣器实际值：%1 , 期待值：%2！").arg(curValue?tr("关闭"):tr("开启")).arg(expect?tr("关闭"):tr("开启"));
     updatePro(str,ret);ret = false;
 
     curValue = b->alarmTime;
     expect = mCfg->tem_filter;
     if(curValue == expect) ret = true;
-    str = tr("插接箱过滤次数实际值：%1 , 期待值：%2！").arg(curValue).arg(expect);
+    str = tr("温度模块过滤次数实际值：%1 , 期待值：%2！").arg(curValue).arg(expect);
     updatePro(str,ret);ret = false;
 }
 void Ad_Resulting::compareEnvValue()

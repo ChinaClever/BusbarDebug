@@ -221,6 +221,14 @@ bool Dev_SiCtrl::setBusbarInsertFilter(int val)
     return ret;
 }
 
+bool Dev_SiCtrl::setBusbarInsertPhase(int val)
+{
+    bool ret = true;
+    ret = sentRtuCmd(SetPlugPhase, val);
+
+    return ret;
+}
+
 bool Dev_SiCtrl::setBusbarStartPow(int val1 , int val2)//test
 {
     bool ret = true;

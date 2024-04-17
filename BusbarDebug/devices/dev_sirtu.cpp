@@ -200,6 +200,7 @@ void Dev_SiRtu::initData(sBoxData *box, Rtu_recv *pkt)
     box->isd = pkt->isd;
     box->reState = pkt->reState;
     box->boxType = pkt->boxType;
+    box->phaseFlag = pkt->phaseFlag;
 }
 
 void Dev_SiRtu::thdDataV3(Rtu_recv *pkt)
@@ -470,6 +471,7 @@ int Dev_SiRtu::rtu_plug_recv_init(uchar *ptr, Rtu_recv *msg)
     msg->buzzerStatus = (*ptr) * 256 + *(ptr+1); ptr+=2;len+=2;//[蜂鸣器]
     msg->alarmTime = (*ptr) * 256 + *(ptr+1); ptr+=2;len+=2;
     msg->boxType = (*ptr) * 256 + *(ptr+1); ptr+=2;len+=2;
+    msg->phaseFlag = (*ptr) * 256 + *(ptr+1); ptr+=2;len+=2;//单相/三相
 
     return len; //3.0.0版本
 }
