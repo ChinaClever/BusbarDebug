@@ -26,7 +26,7 @@ int Rtu_Serial::readSerial(quint8 *cmd, int secs)
     return rtn;
 }
 
-bool Rtu_Serial::writeSerial(quint8 *cmd, int len)
+bool Rtu_Serial::  writeSerial(quint8 *cmd, int len)
 {
     bool ret = false;
     if(mSerial) {

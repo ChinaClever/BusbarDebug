@@ -37,6 +37,7 @@ bool Sn_SerialNum::checkSn(uchar *sn, int len)
             ret = true;
         }
     }
+
     return ret;
 }
 

@@ -15,7 +15,8 @@ bool Rtu_Write::writes(sRtuSetItems &pkt)
     bool ret = false;
     uchar sendBuf[256]={0}, recvBuf[128]={0};
     int rtn = rtu_write_packets(&pkt, sendBuf);
-    rtn = transmit(sendBuf, rtn, recvBuf, 2);
+    rtn = transmit(sendBuf, rtn, recvBuf, 4);
+
     if(rtn > 0) {
         ret = rtuRecvCrc(recvBuf, rtn);
         if(ret) {

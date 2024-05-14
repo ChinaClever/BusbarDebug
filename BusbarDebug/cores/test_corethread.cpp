@@ -125,6 +125,7 @@ bool Test_CoreThread::initFun()
         double set = 2.5;
         ret = mYc->powerOn(set);
         sleep(25);
+        if(ret) ret = setDev();//设置序列号
     }else if(mItem->modeId == 1){//插接箱
         ret = mYc->powerOn();
         sleep(5);
