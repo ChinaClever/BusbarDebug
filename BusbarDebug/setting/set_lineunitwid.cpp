@@ -128,3 +128,12 @@ int Set_LineUnitWid::transformRate(int index)
     }
     return rate;
 }
+
+void Set_LineUnitWid::on_curMaxSpin_valueChanged(double arg1)
+{
+    sObjCfg *obj = mDev;
+    double val = ui->curMaxSpin->value();
+    ui->powMaxSpin->setValue(val*220.0/obj->pow.rate);
+    ui->totalpowMaxSpin->setValue(val*220.0*3/obj->pow.rate);
+}
+
