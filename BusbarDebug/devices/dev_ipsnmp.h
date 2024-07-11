@@ -30,6 +30,7 @@ public:
     QString getISDOid(){return "1.3.6.1.4.1.30966.12.1.1.2.13.0";}
     QString getShuntOid(){return "1.3.6.1.4.1.30966.12.1.1.2.14.0";}
     QString getResidualOid(){return "1.3.6.1.4.1.30966.12.1.1.2.15.0";}
+    QString getRestoreOid(){return "1.3.6.1.4.1.30966.12.1.1.1.22.0";}//恢复出厂设置
 
     QString getLineVolMinOid(int line , int index){return QString("1.3.6.1.4.1.30966.12.1.2.%1.%2.0").arg(line+1).arg(index+16);}
     QString getOtherMinOid(int index){return QString("1.3.6.1.4.1.30966.12.1.1.3.%1.0").arg(index+13);}

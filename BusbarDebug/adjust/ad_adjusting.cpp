@@ -33,7 +33,7 @@ bool Ad_Adjusting::transmit10(uchar *buf, int len)
 {
     bool ret = true;
     uchar recv[64] = {0};
-    len = mModbus->transmit10(buf, len, recv, 20);
+    len = mModbus->transmit10(buf, len, recv, 12);
     if(len > 0) {
         ret = recvStatus(recv, len);
     }

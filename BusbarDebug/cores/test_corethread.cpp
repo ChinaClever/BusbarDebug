@@ -96,6 +96,7 @@ bool Test_CoreThread::checkDev()
 void Test_CoreThread::workResult()
 {
     BaseLogs::bulid()->start();
+    sleep(5);
     bool res = mYc->powerDown();
     // sleep(2);
     // Json_Pack::bulid()->http_post("debugdata/add","192.168.1.12");//全流程才发送记录(http)

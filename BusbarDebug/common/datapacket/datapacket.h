@@ -49,7 +49,7 @@ enum  sSetStartType{
     ,SetStartBreaker         = 9           //0:没有 1:正常 2:损坏
     ,SetStartLps             = 10           //0:没有 1:正常 2:损坏
 
-    ,StartEle_1   = 34           //电能清零
+    ,StartRestore   = 34           //恢复出厂设置
     ,StartEle_2   = 51
     ,StartEle_3   = 68
 
@@ -219,6 +219,8 @@ enum  sSetPlugType{
 
     ,PlugZeroLineMIN       = 247           //零线电流下限
     ,PlugZeroLineMAX       = 248           //零线电流上限
+
+    ,PlugRestoreFactory       = 604           //恢复出厂设置
 
 };
 

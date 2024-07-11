@@ -184,7 +184,15 @@ bool Dev_SiCtrl::rtu_sent_uintV3_buff(uchar addr, ushort reg, uint num,  uint va
 bool Dev_SiCtrl::setBusbarStartEle(int index)//清始端箱电能
 {
     bool ret = true;
-    ret = sentRtuCmd(StartEle_1+(index-1)*17, 1);
+    // ret = sentRtuCmd(StartEle_1+(index-1)*17, 1);
+
+    return ret;
+}
+
+bool Dev_SiCtrl::setBusbarStartRestore(int val)//清始端箱电能
+{
+    bool ret = true;
+    ret = sentRtuCmd(StartRestore, val);
 
     return ret;
 }
@@ -293,3 +301,10 @@ bool Dev_SiCtrl::setBusbarInsertPow(int index , int val1 , int val2)
     return ret;
 }
 
+bool Dev_SiCtrl::setBusbarInsertRestore(int val)
+{
+    bool ret = true;
+    ret = sentRtuCmd(PlugRestoreFactory, val);
+
+    return ret;
+}

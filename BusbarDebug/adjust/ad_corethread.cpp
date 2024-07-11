@@ -26,8 +26,7 @@ Ad_CoreThread *Ad_CoreThread::bulid(QObject *parent)
 
 bool Ad_CoreThread::workDown()
 {
-    bool ret = true;
-
+    bool ret = true; QString str;
 
     Dev_Object *dev = Dev_SiRtu::bulid();
     if(mItem->modeId == START_BUSBAR) dev = Dev_IpSnmp::bulid();
@@ -77,6 +76,18 @@ bool Ad_CoreThread::workDown()
         dev->readPduData();
         mResult->compareEnvInfo();
         mResult->compareEnvValue();//温度阈值
+    }
+
+    //恢复出厂设置
+    if(ret) {
+        if(mItem->modeId == START_BUSBAR){//始端箱
+            str = tr("始端箱恢复出厂设置");
+            ret = Dev_SiCtrl::bulid()->setBusbarStartRestore(12);
+        }else {
+            str = tr("插接箱恢复出厂设置");
+            ret = Dev_SiCtrl::bulid()->setBusbarInsertRestore(12);
+        }
+        updatePro(str);
     }
 
     return ret;

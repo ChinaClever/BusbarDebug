@@ -26,6 +26,7 @@ public:
     bool setBusbarStartEle(int index);//index [1,3]
     bool setBusbarStartPow(int val1 , int val2);
     bool setBusbarStartLineVol(int index , int val1 , int val2);
+    bool setBusbarStartRestore(int val);
 
     bool setBusbarInsertEle(int index);//index [1,9]
     bool setBusbarInsertPow(int index , int val1 , int val2);
@@ -38,6 +39,7 @@ public:
     bool setBusbarInsertFilter(int val);
     bool setBusbarInsertZeroLine(int val1 , int val2);
     bool setBusbarInsertPhase(int val);
+    bool setBusbarInsertRestore(int val);
 
     bool rtu_sent_ushortV3_buff(uchar addr, ushort reg, uint num,  uint val1, uint val2);
     bool rtu_sent_uintV3_buff(uchar addr, ushort reg, uint num,  uint val1, uint val2);

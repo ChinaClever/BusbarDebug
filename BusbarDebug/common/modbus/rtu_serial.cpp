@@ -48,12 +48,13 @@ int Rtu_Serial::transmit10(uchar *sent, int len, uchar *recv, int secs)
     int rtn = 0;
     bool ret = writeSerial(sent, len);
     if(ret) {
-        sleep(12);
+        sleep(secs);
         rtn = readSerial(recv, secs);
     }
 
     return rtn;
 }
+
 
 int Rtu_Serial::transmit(uchar *sent, int len, uchar *recv, int secs)
 {

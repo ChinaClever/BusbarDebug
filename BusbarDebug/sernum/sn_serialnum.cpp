@@ -185,6 +185,7 @@ bool Sn_SerialNum::snEnter()
         ret = readSn(mSnItem);
         if(!ret && mSnItem.sn.size()) {
             ret = writeSn(mSnItem);
+            ret = readSn(mSnItem);
             writeStatus(ret);
         }
     }
