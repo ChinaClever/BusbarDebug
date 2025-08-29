@@ -124,13 +124,13 @@ void Home_WorkWid::updateResult()
 {
     QString style;
     QString str = tr("---");
-    //    if(mItem->modeId && isCheck) {
-    //        QString str = getTime().at(1);
-    //        if(!str.toInt() || (mId<40)) mPro->result = Test_Fail;
-    //    } else if(isCheck) {
-    //        if(mId < 14) mPro->result = Test_Fail;
-    //    }
-    // if(mId < 30) mPro->result = Test_Fail;
+//        if(mItem->modeId && isCheck) {
+//            QString str = getTime().at(1);
+//            if(!str.toInt() || (mId<40)) mPro->result = Test_Fail;
+//        } else if(isCheck) {
+//            if(mId < 14) mPro->result = Test_Fail;
+//        }
+     if(mId < 15) mPro->result = Test_Fail;
 
     if (Test_Fail == mPro->result) {
         str = tr("失败");
