@@ -159,31 +159,6 @@ bool Dev_SiCtrl::rtu_sent_ushortV3_buff(uchar addr, ushort reg, uint num,  uint 
     return ret;
 }
 
-bool Dev_SiCtrl::rtu_sent_cur_ushortV3_buff(uchar addr, ushort reg,ushort reg2, uint num,  uint val1, uint val2,int mode)
-{
-    bool ret = true;
-    Rtu_Sent_Ushort_V3 msg;
-
-    msg.addr = addr;
-    msg.fn   = 0x10;
-
-    msg.num  = num;
-    if(mode == 0){
-        msg.reg  = reg;
-        msg.val1 = val1 & 0xFFFF;
-        msg.val2 = val2 & 0xFFFF;
-    }else{
-        msg.reg  = reg2;
-        msg.val1 = (val1>>16) & 0xFFFF;
-        msg.val2 = (val2>>16) & 0xFFFF;
-    }
-    for(int i=0; i<3; ++i) {
-        ret = mModbus->write(msg);
-        if(ret) break; else delay(2+i);
-    }
-    return ret;
-}
-
 bool Dev_SiCtrl::rtu_sent_uintV3_buff(uchar addr, ushort reg, uint num,  uint val1, uint val2)
 {
     bool ret = true;
@@ -302,11 +277,13 @@ bool Dev_SiCtrl::setBusbarInsertZeroLine(int val1 , int val2)
     return ret;
 }
 
-bool Dev_SiCtrl::setBusbarInsertCur(int index , int val1 , int val2)
+bool Dev_SiCtrl::setBusbarInsertCur(int index , int val1 , int val2,int flag)
 {
     bool ret = true;
-    ret = rtu_sent_cur_ushortV3_buff(mItem->addr, PlugCurrentMIN_L1+(index-1)*8, PlugCurrentMIN_HIGH_L1+(index-1)*4, 2 , val1 , val2 , 0);
-    ret = rtu_sent_cur_ushortV3_buff(mItem->addr, PlugCurrentMIN_L1+(index-1)*8, PlugCurrentMIN_HIGH_L1+(index-1)*4, 2 , val1 , val2 , 1);
+    if(flag == 0)
+        ret = rtu_sent_ushortV3_buff(mItem->addr, PlugCurrentMIN_L1+(index-1)*8, 2 , val1 , val2);
+    else
+        ret = rtu_sent_uintV3_buff(mItem->addr, PlugCurrentMIN_HIGH_L1+(index-1)*4, 2 , val1 , val2);
 
     return ret;
 }

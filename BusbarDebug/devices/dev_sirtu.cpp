@@ -573,12 +573,12 @@ int Dev_SiRtu::rtu_plug_recv_loop_high_cur_alram_data(uchar *ptr, Rtu_recv *msg 
 {
     RtuRecvLine *p = &(msg->data[index]);
     uint len = 0;
-    uint temp = (*ptr) * 256 + *(ptr+1); ptr+=2;len+=2;
-    temp  <<= 16;
-    p->cur.imin += temp;
-    temp = (*ptr) * 256 + *(ptr+1); ptr+=2;len+=2;
-    temp  <<= 16;
-    p->cur.imax += temp;
+    p->cur.imin = (*ptr) * 256 + *(ptr+1); ptr+=2;len+=2;
+    p->cur.imin  <<= 16;
+    p->cur.imin += (*ptr) * 256 + *(ptr+1); ptr+=2;len+=2;
+    p->cur.imax = (*ptr) * 256 + *(ptr+1); ptr+=2;len+=2;
+    p->cur.imax  <<= 16;
+    p->cur.imax += (*ptr) * 256 + *(ptr+1); ptr+=2;len+=2;
     return len;
 }
 
@@ -586,9 +586,9 @@ int Dev_SiRtu::rtu_plug_recv_loop_high_cur_data(uchar *ptr, Rtu_recv *msg , int 
 {
     RtuRecvLine *p = &(msg->data[index]);
     uint len = 0;
-    uint temp = (*ptr) * 256 + *(ptr+1); ptr+=2;len+=2;
-    temp  <<= 16;
-    p->cur.ivalue += temp;
+    p->cur.ivalue = (*ptr) * 256 + *(ptr+1); ptr+=2;len+=2;
+    p->cur.ivalue  <<= 16;
+    p->cur.ivalue += (*ptr) * 256 + *(ptr+1); ptr+=2;len+=2;
     return len;
 }
 
@@ -632,12 +632,14 @@ bool Dev_SiRtu::rtu_recv_packetV3(uchar *buf, int len, Rtu_recv *pkt)
                 ptr += rtu_plug_recv_loop_alarm_data(ptr , pkt , i);
             //ptr += rtu_plug_recv_zero_data(ptr , pkt);
             ptr+=2;
-            for(int i = 0 ; i < RTU_LOOP_NUM ; ++i) // 读取loop load数据
-                ptr += 2;
-            for(int i = 0 ; i < RTU_LOOP_NUM ; ++i) // 读取loop high current数据
-                ptr += rtu_plug_recv_loop_high_cur_data(ptr , pkt , i);
-            for(int i = 0 ; i < RTU_LOOP_NUM ; ++i) // 读取loop high alram数据
-                ptr += rtu_plug_recv_loop_high_cur_alram_data(ptr , pkt , i);
+            if(pkt->plug_cur_spec == 1){
+                for(int i = 0 ; i < RTU_LOOP_NUM ; ++i) // 读取loop load数据
+                    ptr += 2;
+                for(int i = 0 ; i < RTU_LOOP_NUM ; ++i) // 读取loop high current数据
+                    ptr += rtu_plug_recv_loop_high_cur_data(ptr , pkt , i);
+                for(int i = 0 ; i < RTU_LOOP_NUM ; ++i) // 读取loop high alram数据
+                    ptr += rtu_plug_recv_loop_high_cur_alram_data(ptr , pkt , i);
+            }
 
         }
         pkt->crc = (buf[RTU_SENT_LEN_V30*2+6-1]*256) + buf[RTU_SENT_LEN_V30*2+6-2]; // RTU_SENT_LEN_V23*2+5

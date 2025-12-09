@@ -32,7 +32,7 @@ public:
     bool setBusbarInsertPow(int index , int val1 , int val2);
     bool setBusbarInsertVol(int index , int val1 , int val2);
     bool setBusbarInsertTem(int index , int val1 , int val2);
-    bool setBusbarInsertCur(int index , int val1 , int val2);
+    bool setBusbarInsertCur(int index , int val1 , int val2, int flag);
     bool setBusbarInsertBaud(int val);
     bool setBusbarInsertiOF(int val);
     bool setBusbarInsertBuzzer(int val);
@@ -42,7 +42,6 @@ public:
     bool setBusbarInsertRestore(int val);
     bool setBusbarInsertCurSpec(int val);
 
-    bool rtu_sent_cur_ushortV3_buff(uchar addr, ushort reg,ushort reg2, uint num,  uint val1, uint val2,int mode=0);
     bool rtu_sent_ushortV3_buff(uchar addr, ushort reg, uint num,  uint val1, uint val2);
     bool rtu_sent_uintV3_buff(uchar addr, ushort reg, uint num,  uint val1, uint val2);
 

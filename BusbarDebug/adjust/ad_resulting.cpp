@@ -742,6 +742,8 @@ void Ad_Resulting::setInsertInfo()
     Dev_SiCtrl::bulid()->setBusbarInsertBuzzer(mCfg->si_buzzer);
     Dev_SiCtrl::bulid()->setBusbarInsertFilter(mCfg->si_filter);
     Dev_SiCtrl::bulid()->setBusbarInsertPhase(mCfg->si_phaseflag);
+    if(mCfg->si_cur_spec == 1)  Dev_SiCtrl::bulid()->setBusbarInsertCurSpec(1);
+    else Dev_SiCtrl::bulid()->setBusbarInsertCurSpec(0);
 }
 void Ad_Resulting::setEnvInfo()
 {
@@ -761,10 +763,11 @@ void Ad_Resulting::setInsertLineValue()
     int minVal = it->cur.min*it->cur.rate;
     int maxVal = it->cur.max*it->cur.rate;
     int loop = b->loopNum;
+    int cur_spec =  mCfg->si_cur_spec;
 
-    if(mCfg->si_cur_spec == 1)  Dev_SiCtrl::bulid()->setBusbarInsertCurSpec(1);
+
     for(int i = 0; i < loop ; i++){
-        Dev_SiCtrl::bulid()->setBusbarInsertCur(i+1 ,minVal ,maxVal);
+        Dev_SiCtrl::bulid()->setBusbarInsertCur(i+1 ,minVal ,maxVal,cur_spec);
     }
     minVal = it->vol.min*it->vol.rate;
     maxVal = it->vol.max*it->vol.rate;
