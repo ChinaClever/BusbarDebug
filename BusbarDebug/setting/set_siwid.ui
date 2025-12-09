@@ -317,7 +317,7 @@
         </item>
         <item>
          <property name="text">
-          <string>120A（65A以上）</string>
+          <string>125A（65A以上）</string>
          </property>
         </item>
        </widget>
