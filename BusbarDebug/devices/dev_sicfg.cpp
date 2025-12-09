@@ -49,7 +49,7 @@ void Dev_SiCfg::writeType()
     write("si_buzzer", ptr->si_buzzer);
     write("si_filter", ptr->si_filter);
     write("si_phaseflag", ptr->si_phaseflag);
-    write("si_cur_spec",ptr->si_cur_spec);
+    write("si_curspec",ptr->si_cur_spec);
 
     //温度阈值
     write("tem_buzzer", ptr->tem_buzzer);
