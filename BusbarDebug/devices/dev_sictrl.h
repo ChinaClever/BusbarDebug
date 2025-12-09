@@ -40,7 +40,9 @@ public:
     bool setBusbarInsertZeroLine(int val1 , int val2);
     bool setBusbarInsertPhase(int val);
     bool setBusbarInsertRestore(int val);
+    bool setBusbarInsertCurSpec(int val);
 
+    bool rtu_sent_cur_ushortV3_buff(uchar addr, ushort reg,ushort reg2, uint num,  uint val1, uint val2,int mode=0);
     bool rtu_sent_ushortV3_buff(uchar addr, ushort reg, uint num,  uint val1, uint val2);
     bool rtu_sent_uintV3_buff(uchar addr, ushort reg, uint num,  uint val1, uint val2);
 

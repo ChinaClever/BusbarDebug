@@ -761,6 +761,8 @@ void Ad_Resulting::setInsertLineValue()
     int minVal = it->cur.min*it->cur.rate;
     int maxVal = it->cur.max*it->cur.rate;
     int loop = b->loopNum;
+
+    if(mCfg->si_cur_spec == 1)  Dev_SiCtrl::bulid()->setBusbarInsertCurSpec(1);
     for(int i = 0; i < loop ; i++){
         Dev_SiCtrl::bulid()->setBusbarInsertCur(i+1 ,minVal ,maxVal);
     }

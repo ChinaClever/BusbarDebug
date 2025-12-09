@@ -40,6 +40,7 @@ void Set_SiWid::initType()
     ui->filterBox->setCurrentIndex(dt->si_filter-2);
     ui->iOFBox->setCurrentIndex(dt->si_iOF);
     ui->phaseBox->setCurrentIndex(dt->si_phaseflag);
+    ui->curSpecBox->setCurrentIndex(dt->si_cur_spec);
 }
 
 void Set_SiWid::updateType()
@@ -50,6 +51,7 @@ void Set_SiWid::updateType()
     dt->si_filter = ui->filterBox->currentIndex()+2;
     dt->si_iOF = ui->iOFBox->currentIndex();
     dt->si_phaseflag = ui->phaseBox->currentIndex();
+    dt->si_cur_spec = ui->curSpecBox->currentIndex();
 }
 
 bool Set_SiWid::inputCheck()

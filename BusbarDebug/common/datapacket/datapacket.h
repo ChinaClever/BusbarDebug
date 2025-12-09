@@ -116,6 +116,8 @@ enum  sSetPlugType{
     ,SetPlugBuzzer           = 6           //0:开启 1:关闭
     ,SetPlugAlarmTime        = 7            //2-5
     ,SetPlugPhase            = 9            //单相/三相
+    ,SetPlugCurSpec          = 10            //电流规格
+    ,SetPlugBackupBreaker    = 11            //备用断路器
 
     ,SetPlugEle_1   = 30           //电能清零
     ,SetPlugEle_2   = 45
@@ -220,6 +222,9 @@ enum  sSetPlugType{
     ,PlugZeroLineMIN       = 247           //零线电流下限
     ,PlugZeroLineMAX       = 248           //零线电流上限
 
+    ,PlugCurrentMIN_HIGH_L1       = 273           //电流下限高位
+    ,PlugCurrentMAX_HIGH_L1       = 275           //电流上限高位
+
     ,PlugRestoreFactory       = 604           //恢复出厂设置
 
 };
@@ -322,6 +327,7 @@ struct sTypeCfg
     uchar si_buzzer;
     uchar si_filter;
     uchar si_phaseflag;//单相或者是三相
+    uchar si_cur_spec;
     sObjCfg si_cfg;
 
     uchar ip_bytepassword;
@@ -622,6 +628,8 @@ typedef struct _sBoxData {
     uchar lightning; // 防雷是否开启
     uchar lpsAlarm;//防雷开关告警值 0表示未告警 1表示已告警 2表示已记录
     uchar HzAlarm;//频率告警值 0表示未告警 1表示已告警 2表示已记录
+    uchar plug_cur_spec;// 插接箱电流规格
+    uchar backup_breaker;// 插接箱备用断路器
 
     uint zeroCur;//零线电流
     uint volUnbalance;//电压三相不平衡
