@@ -283,7 +283,7 @@ bool Dev_SiCtrl::setBusbarInsertCur(int index , int val1 , int val2,int flag)
     if(flag == 0)
         ret = rtu_sent_ushortV3_buff(mItem->addr, PlugCurrentMIN_L1+(index-1)*8, 2 , val1 , val2);
     else
-        ret = rtu_sent_uintV3_buff(mItem->addr, PlugCurrentMIN_HIGH_L1+(index-1)*4, 2 , val1 , val2);
+        ret = rtu_sent_uintV3_buff(mItem->addr, PlugCurrentMIN_HIGH_L1+(index-1)*4, 4 , val1 , val2);
 
     return ret;
 }
@@ -291,7 +291,7 @@ bool Dev_SiCtrl::setBusbarInsertCur(int index , int val1 , int val2,int flag)
 bool Dev_SiCtrl::setBusbarInsertCurSpec(int val)
 {
     bool ret = true;
-    ret = sentRtuCmd(mItem->addr, SetPlugCurSpec, val);
+    ret = sentRtuCmd(SetPlugCurSpec, val);
 
     return ret;
 }

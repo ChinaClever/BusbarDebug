@@ -742,8 +742,14 @@ void Ad_Resulting::setInsertInfo()
     Dev_SiCtrl::bulid()->setBusbarInsertBuzzer(mCfg->si_buzzer);
     Dev_SiCtrl::bulid()->setBusbarInsertFilter(mCfg->si_filter);
     Dev_SiCtrl::bulid()->setBusbarInsertPhase(mCfg->si_phaseflag);
-    if(mCfg->si_cur_spec == 1)  Dev_SiCtrl::bulid()->setBusbarInsertCurSpec(1);
-    else Dev_SiCtrl::bulid()->setBusbarInsertCurSpec(0);
+    if(mCfg->si_cur_spec == 1){
+        updatePro(tr("设置插接箱125A！"));
+        Dev_SiCtrl::bulid()->setBusbarInsertCurSpec(1);
+    }
+    else{
+        updatePro(tr("设置插接箱63A！"));
+        Dev_SiCtrl::bulid()->setBusbarInsertCurSpec(0);
+    }
 }
 void Ad_Resulting::setEnvInfo()
 {
