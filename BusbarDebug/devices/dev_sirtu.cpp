@@ -201,6 +201,7 @@ void Dev_SiRtu::initData(sBoxData *box, Rtu_recv *pkt)
     box->reState = pkt->reState;
     box->boxType = pkt->boxType;
     box->phaseFlag = pkt->phaseFlag;
+    box->shuntRelease = pkt->shuntRelease;
 }
 
 void Dev_SiRtu::thdDataV3(Rtu_recv *pkt)
@@ -476,6 +477,7 @@ int Dev_SiRtu::rtu_plug_recv_init(uchar *ptr, Rtu_recv *msg)
     msg->phaseFlag = (*ptr) * 256 + *(ptr+1); ptr+=2;len+=2;//单相/三相
     msg->plug_cur_spec = (*ptr) * 256 + *(ptr+1); ptr+=2;len+=2;
     msg->backup_breaker = (*ptr) * 256 + *(ptr+1); ptr+=2;len+=2;
+    msg->shuntRelease = (*ptr) * 256 + *(ptr+1); ptr+=2;len+=2;
 
     return len; //3.0.0版本
 }
@@ -620,7 +622,7 @@ bool Dev_SiRtu::rtu_recv_packetV3(uchar *buf, int len, Rtu_recv *pkt)
         }
         else{//插接箱
             ptr += rtu_plug_recv_init(ptr , pkt);
-            ptr += (16-12)*2;//保留
+            ptr += (16-13)*2;//保留
             for(int i = 0 ; i < RTU_LOOP_NUM ; ++i) // 读取loop 数据
                 ptr += rtu_plug_recv_loop_data(ptr , pkt , i);
             ptr += rtu_plug_recv_thd_pl_data(ptr , pkt);

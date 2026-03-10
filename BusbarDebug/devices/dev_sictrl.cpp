@@ -296,6 +296,15 @@ bool Dev_SiCtrl::setBusbarInsertCurSpec(int val)
     return ret;
 }
 
+
+bool Dev_SiCtrl::setBusbarInsertTrip(int val)
+{
+    bool ret = true;
+    ret = sentRtuCmd(SetPlugTrip, val);
+
+    return ret;
+}
+
 bool Dev_SiCtrl::setBusbarInsertVol(int index , int val1 , int val2)
 {
     bool ret = true;

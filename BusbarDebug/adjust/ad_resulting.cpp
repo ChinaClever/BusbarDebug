@@ -750,6 +750,10 @@ void Ad_Resulting::setInsertInfo()
         updatePro(tr("设置插接箱63A！"));
         Dev_SiCtrl::bulid()->setBusbarInsertCurSpec(0);
     }
+    Dev_SiCtrl::bulid()->setBusbarInsertTrip(mCfg->si_trip);
+    if(mCfg->si_trip){
+        updatePro(tr("设置插接箱配有分励脱扣器功能！"));
+    }
 }
 void Ad_Resulting::setEnvInfo()
 {
@@ -861,7 +865,15 @@ void Ad_Resulting::compareInsertInfo()
     if(curValue == expect) ret = true;
     str = tr("插接箱单相或三相实际值：%1 , 期待值：%2！").arg(curValue).arg(expect);
     updatePro(str,ret);ret = false;
+
+
+    curValue = b->shuntRelease;
+    expect = mCfg->si_trip;
+    if(curValue == expect) ret = true;
+    str = tr("插接箱分励脱扣器实际值：%1 , 期待值：%2！").arg(curValue?tr("有"):tr("无")).arg(expect?tr("有"):tr("无"));
+    updatePro(str,ret);ret = false;
 }
+
 void Ad_Resulting::compareInsertLineValue()
 {
     QString info = tr("对比插接箱电压等电气阈值信息！");

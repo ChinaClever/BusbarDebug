@@ -118,6 +118,7 @@ enum  sSetPlugType{
     ,SetPlugPhase            = 9            //单相/三相
     ,SetPlugCurSpec          = 10            //电流规格
     ,SetPlugBackupBreaker    = 11            //备用断路器
+    ,SetPlugTrip    = 12                    //分离脱扣器
 
     ,SetPlugEle_1   = 30           //电能清零
     ,SetPlugEle_2   = 45
@@ -328,6 +329,7 @@ struct sTypeCfg
     uchar si_filter;
     uchar si_phaseflag;//单相或者是三相
     uchar si_cur_spec;
+    uchar si_trip;
     sObjCfg si_cfg;
 
     uchar ip_bytepassword;

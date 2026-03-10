@@ -41,6 +41,7 @@ public:
     bool setBusbarInsertPhase(int val);
     bool setBusbarInsertRestore(int val);
     bool setBusbarInsertCurSpec(int val);
+    bool setBusbarInsertTrip(int val);
 
     bool rtu_sent_ushortV3_buff(uchar addr, ushort reg, uint num,  uint val1, uint val2);
     bool rtu_sent_uintV3_buff(uchar addr, ushort reg, uint num,  uint val1, uint val2);
