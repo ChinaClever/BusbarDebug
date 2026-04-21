@@ -29,7 +29,8 @@ private slots:
 
 private:
     Ui::Set_LineUnitWid *ui;
-    sObjCfg *mDev;
+    sObjCfg *mCfg;
+    sDevData *mDev;
     int mIndex;
 };
 

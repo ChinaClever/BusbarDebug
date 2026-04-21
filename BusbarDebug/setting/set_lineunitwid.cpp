@@ -15,6 +15,7 @@ Set_LineUnitWid::Set_LineUnitWid(QWidget *parent) :
     gridLayout->setContentsMargins(0, 0, 0, 0);
     gridLayout->addWidget(this);
     mIndex = 0;
+    mDev = Dev_IpCfg::bulid(this)->getDev();
 }
 
 Set_LineUnitWid::~Set_LineUnitWid()
@@ -32,16 +33,19 @@ void Set_LineUnitWid::showAndHideWid(bool show)
     ui->hzMinSpin->setHidden(show);
     ui->label_4->setHidden(show);
     ui->hzMaxSpin->setHidden(show);
-    ui->label_16->setHidden(show);
+    //ui->label_16->setHidden(show);
     ui->totalpowMinSpin->setHidden(show);
     ui->label_15->setHidden(show);
-    ui->totalpowMaxSpin->setHidden(show);
+    //ui->totalpowMaxSpin->setHidden(show);
     ui->label_18->setHidden(show);/////////////////////////////////////////////////////////////////////////////
     ui->zerocurMinSpin->setHidden(show);
     ui->label_17->setHidden(show);
     ui->zerocurMaxSpin->setHidden(show);/////////////////////////////////////////////////////////////////////////////
     ui->label_2->setHidden(show);
     ui->reMaxSpin->setHidden(show);
+
+    ui->label_19->setHidden(!show);
+    ui->powOutputMaxSpin->setHidden(!show);
 
     ui->zerocurMinSpin->hide();
     ui->label_17->hide();
@@ -50,7 +54,7 @@ void Set_LineUnitWid::showAndHideWid(bool show)
 void Set_LineUnitWid::init(sObjCfg *obj , int index)
 {
     mIndex = index;
-    mDev = obj;
+    mCfg = obj;
     ui->zerocurMinSpin->hide();
     ui->label_17->hide();
     ui->curMinSpin->setValue(obj->cur.min);
@@ -73,6 +77,8 @@ void Set_LineUnitWid::init(sObjCfg *obj , int index)
 
     ui->reMaxSpin->setValue(obj->recur.max);
 
+    ui->powOutputMaxSpin->setValue(obj->outputpow.max);
+
     obj->vol.rate = transformRate(ui->volMaxSpin->decimals());
     obj->cur.rate = transformRate(ui->curMaxSpin->decimals());
     obj->tem.rate = transformRate(ui->temMaxSpin->decimals());
@@ -83,6 +89,8 @@ void Set_LineUnitWid::init(sObjCfg *obj , int index)
     obj->zerocur.rate = transformRate(ui->zerocurMaxSpin->decimals());
     obj->recur.rate = transformRate(ui->reMaxSpin->decimals());
 
+    obj->output.rate = transformRate(ui->powOutputMaxSpin->decimals());
+
     if(index == START_BUSBAR){
         showAndHideWid(false);
     }else if(index == INSERT_BUSBAR){
@@ -92,7 +100,7 @@ void Set_LineUnitWid::init(sObjCfg *obj , int index)
 
 void Set_LineUnitWid::updateData()
 {
-    sObjCfg *obj = mDev;
+    sObjCfg *obj = mCfg;
     obj->cur.min = ui->curMinSpin->value();
     obj->cur.max = ui->curMaxSpin->value();
     obj->vol.min = ui->volMinSpin->value();
@@ -113,6 +121,8 @@ void Set_LineUnitWid::updateData()
 
     obj->recur.max = ui->reMaxSpin->value();
 
+    obj->outputpow.max = ui->powOutputMaxSpin->value();
+
 
 }
 
@@ -131,9 +141,14 @@ int Set_LineUnitWid::transformRate(int index)
 
 void Set_LineUnitWid::on_curMaxSpin_valueChanged(double arg1)
 {
-    sObjCfg *obj = mDev;
+    sObjCfg *obj = mCfg;
     double val = ui->curMaxSpin->value();
     ui->powMaxSpin->setValue(val*220.0/obj->pow.rate);
     ui->totalpowMaxSpin->setValue(val*220.0*3/obj->pow.rate);
+    if(mIndex == INSERT_BUSBAR && mDev->cfg.si_phaseflag==1){
+        ui->powOutputMaxSpin->setValue(val*220.0*3/obj->pow.rate);
+    }else if(mIndex == INSERT_BUSBAR && mDev->cfg.si_phaseflag==0){
+        ui->powOutputMaxSpin->setValue(val*220.0/obj->pow.rate);
+    }
 }
 

@@ -41,12 +41,14 @@ protected:
     bool rtu_recv_crc(uchar *buf, int len, Rtu_recv *msg);
     int rtu_plug_recv_loop_high_cur_data(uchar *ptr, Rtu_recv *msg , int index);
     int rtu_plug_recv_loop_high_cur_alram_data(uchar *ptr, Rtu_recv *msg , int index);
+    int rtu_plug_recv_totaldata_output_data(uchar *ptr, Rtu_recv *msg);
 
     void loopData(sBoxData *box, Rtu_recv *pkt);
     void loopObjData(sObjectData *loop, int id, RtuRecvLine *data);
     void envData(sEnvData *env, Rtu_recv *pkt);
     void initData(sBoxData *box, Rtu_recv *pkt);
     void thdDataV3(Rtu_recv *pkt);
+    void outputAndTotalInitData(sBoxData *box, Rtu_recv *pkt);
 };
 
 #endif // DEV_SITHREAD_H

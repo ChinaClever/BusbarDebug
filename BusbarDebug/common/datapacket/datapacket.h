@@ -225,6 +225,8 @@ enum  sSetPlugType{
 
     ,PlugCurrentMIN_HIGH_L1       = 273           //电流下限高位
     ,PlugCurrentMAX_HIGH_L1       = 275           //电流上限高位
+    ,PlugTotalPowerMAX            = 337            //总有功功率最大值
+    ,PlugOutputPowerMAX           = 339            //输出位最大值
 
     ,PlugRestoreFactory       = 604           //恢复出厂设置
 
@@ -308,7 +310,8 @@ struct sObjCfg
     sUnitCfg hum; // 湿度
     sUnitCfg linevol; // 线电压
     sUnitCfg hz; // 频率
-    sUnitCfg totalpow;
+    sUnitCfg totalpow;//总有功功率
+    sUnitCfg outputpow;//输出位有功功率
     sUnitCfg zerocur; // 零线电流
     sUnitCfg recur; // 剩余电流
 };
@@ -556,6 +559,15 @@ typedef struct _sDataPowUnit {
 }sDataPowUnit;
 
 /**
+ * 数据单元：包括输出位参数等
+ */
+typedef struct _sOutputXObjData {
+    sRtuULLintUnit outputXPow[LINE_NUM_MAX]; //输出位有功功率
+    sRtuULLintUnit outputXApPow[LINE_NUM_MAX]; //输出位视在功率
+    uint outputXEle[LINE_NUM_MAX]; //输出位电能
+}sOutputXObjData;
+
+/**
  * 插接位数据对象：包括电流，电压，功率，电能，开关状态，插接位名称
  */
 typedef struct _sObjectData {
@@ -625,6 +637,8 @@ typedef struct _sBoxData {
     sRtuUshortUnit reCur;//剩余电流
     sRtuUnit zeroLineCur;//零线电流
     sRtuULLintUnit totalPow; //总有功功率
+    sOutputXObjData outputXBox;//输出位参数
+
     char dc; // 交直流标志位
     uchar lpsState; // 防雷状态 1：工作正常   2：损坏
     uchar lightning; // 防雷是否开启
@@ -637,6 +651,7 @@ typedef struct _sBoxData {
     uint volUnbalance;//电压三相不平衡
     uint curUnbalance;//电流三相不平衡
     uint totalCur;//总电流
+    uint totalEle;//总电能
     uint online1;
     uint online2;
 

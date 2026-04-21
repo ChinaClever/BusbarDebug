@@ -75,6 +75,9 @@ void Dev_SiCfg::initData()
     initUnit("tem", ptr->tem);
     initUnit("pow", ptr->pow);
 
+    initUnit("totalpow", ptr->totalpow);
+    initUnit("outputpow", ptr->outputpow);
+
     //initUnit("zerocur", ptr->zerocur);////////////////////////////////
 }
 
@@ -86,6 +89,9 @@ void Dev_SiCfg::writeData()
 
     writeUnit("tem", ptr->tem);
     writeUnit("pow", ptr->pow);
+
+    writeUnit("totalpow", ptr->totalpow);
+    writeUnit("outputpow", ptr->outputpow);
 
     //writeUnit("zerocur", ptr->zerocur);/////////////////////////////////////
 }

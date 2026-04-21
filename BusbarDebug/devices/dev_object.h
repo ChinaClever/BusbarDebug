@@ -104,6 +104,9 @@ struct Rtu_recv {
     RtuUshortUnit reCur;//剩余电流
     RtuCurUintUnit zeroLineCur;//零线电流
     RtuUshortUnit rate;//频率
+    RtuUintUnit outputXPow[RTU_LOOP_NUM]; //输出位有功功率
+    RtuUintUnit outputXApPow[RTU_LOOP_NUM]; //输出位视在功率
+    uint outputXEle[RTU_LOOP_NUM]; //输出位电能
     ushort volThd[RTU_THD_NUM][40];
     ushort curThd[RTU_THD_NUM][40];
     uchar lineNum;
@@ -119,6 +122,7 @@ struct Rtu_recv {
     uchar hc; //谐波通道(00表示A路电压通道，01表示B路电压通道，02表示C路电压通道 03表示A路电流通道，04表示B路电流通道，05表示C路电流通道)
     ushort thd[40]; //   谐波含量
     unsigned long long totalApPow;//   总视在功率
+    uint totalEle;//总电能
     ushort crc; // 检验码
     uchar phaseFlag; // 防雷开关
 };

@@ -181,6 +181,27 @@ bool Dev_SiCtrl::rtu_sent_uintV3_buff(uchar addr, ushort reg, uint num,  uint va
     return ret;
 }
 
+bool Dev_SiCtrl::rtu_sent_single_uintV3_buff(uchar addr, ushort reg, uint num,  uint val)
+{
+    bool ret = true;
+    Rtu_Sent_Uint_V3 msg;
+
+    msg.addr = addr;
+    msg.fn   = 0x10;
+    msg.reg  = reg;
+    msg.num  = num;
+    msg.val1 = (val >> 16) & (0xffff);
+    msg.val2 = val & (0xffff);
+
+    for(int i=0; i<3; ++i) {
+        ret = mModbus->write(msg);
+        if(ret) break; else delay(2+i);
+    }
+
+    return ret;
+}
+
+
 bool Dev_SiCtrl::setBusbarStartEle(int index)//清始端箱电能
 {
     bool ret = true;
@@ -325,6 +346,22 @@ bool Dev_SiCtrl::setBusbarInsertRestore(int val)
 {
     bool ret = true;
     ret = sentRtuCmd(PlugRestoreFactory, val);
+
+    return ret;
+}
+
+bool Dev_SiCtrl::setBusbarInsertTotalPow(int val)
+{
+    bool ret = true;
+    ret = rtu_sent_single_uintV3_buff(mItem->addr, PlugTotalPowerMAX, 2 , val);
+
+    return ret;
+}
+
+bool Dev_SiCtrl::setBusbarInsertOutputPow(int index ,int val)
+{
+    bool ret = true;
+    ret = rtu_sent_single_uintV3_buff(mItem->addr, PlugOutputPowerMAX+(index-1)*2, 2 , val);
 
     return ret;
 }

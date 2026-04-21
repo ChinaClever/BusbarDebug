@@ -42,9 +42,12 @@ public:
     bool setBusbarInsertRestore(int val);
     bool setBusbarInsertCurSpec(int val);
     bool setBusbarInsertTrip(int val);
+    bool setBusbarInsertTotalPow(int val);
+    bool setBusbarInsertOutputPow(int index ,int val);
 
     bool rtu_sent_ushortV3_buff(uchar addr, ushort reg, uint num,  uint val1, uint val2);
     bool rtu_sent_uintV3_buff(uchar addr, ushort reg, uint num,  uint val1, uint val2);
+    bool rtu_sent_single_uintV3_buff(uchar addr, ushort reg, uint num,  uint val);
 
 protected:
     bool writeReg(ushort reg, int i, sDataUnit &it, sUnitCfg &unit, int r=1);

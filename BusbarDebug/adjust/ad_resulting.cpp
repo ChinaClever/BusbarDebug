@@ -789,6 +789,14 @@ void Ad_Resulting::setInsertLineValue()
     for(int i = 0; i < loop ; i++){
         Dev_SiCtrl::bulid()->setBusbarInsertPow(i+1 ,minVal ,maxVal);
     }
+
+    maxVal = it->totalpow.max*it->pow.rate;
+    Dev_SiCtrl::bulid()->setBusbarInsertTotalPow(maxVal);
+
+    maxVal = it->outputpow.max*it->pow.rate;
+    for(int i = 0; i < 3 ; i++){
+        Dev_SiCtrl::bulid()->setBusbarInsertOutputPow(i+1 ,maxVal);
+    }
 }
 
 void Ad_Resulting::setInsertEnvValue()
@@ -879,6 +887,7 @@ void Ad_Resulting::compareInsertLineValue()
     QString info = tr("对比插接箱电压等电气阈值信息！");
     updatePro(info);
     sObjectData* b = &(mPacket->share_mem_get()->box[mItem->addr-1].data);
+    sBoxData* boxPowData = &(mPacket->share_mem_get()->box[mItem->addr-1]);
     sObjCfg *it = &(mCfg->si_cfg);
     bool ret = false;
 
@@ -916,6 +925,25 @@ void Ad_Resulting::compareInsertLineValue()
                     .arg(i+1).arg(v).arg(str).arg(curValue/rate).arg(expect/rate).arg(r);
             updatePro(info,ret);ret = false;
         }
+    }
+
+    str = tr("最大值");
+    v = tr("总有功功率");
+    r = tr("kW");
+    expect = it->totalpow.max*it->pow.rate;
+    curValue = boxPowData->totalPow.imax;
+    if(curValue == expect) ret = true;
+    info = tr("插接箱%1 %2实际值：%3 %5, 期待值：%4 %5！")
+            .arg(v).arg(str).arg(curValue/rate).arg(expect/rate).arg(r);
+    updatePro(info,ret);ret = false;
+
+    for(int i = 0 ; i < 3 ; i++){
+        expect = it->outputpow.max*it->pow.rate;
+        curValue = boxPowData->outputXBox.outputXPow[i].imax;
+        if(curValue == expect) ret = true;
+        info = tr("插接箱%1 %2实际值：%3 %5, 期待值：%4 %5！")
+                .arg(v).arg(str).arg(curValue/rate).arg(expect/rate).arg(r);
+        updatePro(info,ret);ret = false;
     }
 }
 

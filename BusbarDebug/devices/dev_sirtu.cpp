@@ -231,6 +231,18 @@ void Dev_SiRtu::thdDataV3(Rtu_recv *pkt)
     }
 }
 
+void Dev_SiRtu::outputAndTotalInitData(sBoxData *box, Rtu_recv *pkt)
+{
+    for(int i = 0 ; i < RTU_LINE_NUM ; i++){
+        box->outputXBox.outputXPow[i].ivalue = pkt->outputXPow[i].ivalue;
+        box->outputXBox.outputXPow[i].iupalarm = pkt->outputXPow[i].ialarm;
+        box->outputXBox.outputXPow[i].imax = pkt->outputXPow[i].imax;
+        box->outputXBox.outputXEle[i] = pkt->outputXEle[i];
+        box->outputXBox.outputXApPow[i].ivalue = pkt->outputXApPow[i].ivalue;
+    }
+    box->totalEle = pkt->totalEle;
+}
+
 bool Dev_SiRtu::readPduData()
 {
     Rtu_Sent it;
@@ -253,6 +265,7 @@ bool Dev_SiRtu::readPduData()
         loopData(box, mRtuPkt); //更新数据
         envData(&(box->env), mRtuPkt);
         initData(box, mRtuPkt);
+        outputAndTotalInitData(box, mRtuPkt);
         box->rate.svalue = mRtuPkt->rate.svalue;
         box->rate.smin = mRtuPkt->rate.smin;
         box->rate.smax = mRtuPkt->rate.smax;
@@ -594,6 +607,48 @@ int Dev_SiRtu::rtu_plug_recv_loop_high_cur_data(uchar *ptr, Rtu_recv *msg , int 
     return len;
 }
 
+int Dev_SiRtu::rtu_plug_recv_totaldata_output_data(uchar *ptr, Rtu_recv *msg)
+{
+    uint len = 0;
+    msg->totalPow.ivalue = (*ptr) * 256 + *(ptr+1); ptr+=2;len+=2;
+    msg->totalPow.ivalue  <<= 16;
+    msg->totalPow.ivalue += (*ptr) * 256 + *(ptr+1); ptr+=2;len+=2;
+    msg->totalPow.ialarm = (*ptr) * 256 + *(ptr+1); ptr+=2;len+=2;
+
+    msg->totalApPow = (*ptr) * 256 + *(ptr+1); ptr+=2;len+=2;
+    msg->totalApPow  <<= 16;
+    msg->totalApPow += (*ptr) * 256 + *(ptr+1); ptr+=2;len+=2;
+
+    msg->totalEle = (*ptr) * 256 + *(ptr+1); ptr+=2;len+=2;
+    msg->totalEle  <<= 16;
+    msg->totalEle += (*ptr) * 256 + *(ptr+1); ptr+=2;len+=2;
+
+    for(int i = 0 ; i < RTU_LINE_NUM ; i++){
+        msg->outputXPow[i].ivalue = (*ptr) * 256 + *(ptr+1); ptr+=2;len+=2;
+        msg->outputXPow[i].ivalue  <<= 16;
+        msg->outputXPow[i].ivalue += (*ptr) * 256 + *(ptr+1); ptr+=2;len+=2;
+        msg->outputXPow[i].ialarm += (*ptr) * 256 + *(ptr+1); ptr+=2;len+=2;
+        msg->outputXApPow[i].ivalue = (*ptr) * 256 + *(ptr+1); ptr+=2;len+=2;
+        msg->outputXApPow[i].ivalue  <<= 16;
+        msg->outputXApPow[i].ivalue += (*ptr) * 256 + *(ptr+1); ptr+=2;len+=2;
+        msg->outputXEle[i] = (*ptr) * 256 + *(ptr+1); ptr+=2;len+=2;
+        msg->outputXEle[i]  <<= 16;
+        msg->outputXEle[i] += (*ptr) * 256 + *(ptr+1); ptr+=2;len+=2;
+    }
+
+    msg->totalPow.imax = (*ptr) * 256 + *(ptr+1); ptr+=2;len+=2;
+    msg->totalPow.imax  <<= 16;
+    msg->totalPow.imax += (*ptr) * 256 + *(ptr+1); ptr+=2;len+=2;
+
+    for(int i = 0 ; i < RTU_LINE_NUM ; i++){
+        msg->outputXPow[i].imax = (*ptr) * 256 + *(ptr+1); ptr+=2;len+=2;
+        msg->outputXPow[i].imax  <<= 16;
+        msg->outputXPow[i].imax += (*ptr) * 256 + *(ptr+1); ptr+=2;len+=2;
+    }
+
+    return len;
+}
+
 bool Dev_SiRtu::rtu_recv_packetV3(uchar *buf, int len, Rtu_recv *pkt)
 {
     bool ret = false;
@@ -641,7 +696,11 @@ bool Dev_SiRtu::rtu_recv_packetV3(uchar *buf, int len, Rtu_recv *pkt)
                     ptr += rtu_plug_recv_loop_high_cur_data(ptr , pkt , i);
                 for(int i = 0 ; i < RTU_LOOP_NUM ; ++i) // 读取loop high alram数据
                     ptr += rtu_plug_recv_loop_high_cur_alram_data(ptr , pkt , i);
+            }else{
+                ptr += 2*6*9;
             }
+            ptr += rtu_plug_recv_totaldata_output_data(ptr , pkt);
+
 
         }
         pkt->crc = (buf[RTU_SENT_LEN_V30*2+6-1]*256) + buf[RTU_SENT_LEN_V30*2+6-2]; // RTU_SENT_LEN_V23*2+5

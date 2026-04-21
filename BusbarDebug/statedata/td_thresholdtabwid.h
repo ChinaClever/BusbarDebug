@@ -25,6 +25,7 @@ protected slots:
 protected:
     void change(double &rate , QString &suffix , QString &str , int &r);
     void addList(int idx , sRtuUshortUnit *unit ,double rate ,QString suffix ,QString str ,int r );
+    void addList(int idx , sRtuULLintUnit *unit ,double rate ,QString suffix ,QString str ,int r );
 
 private:
     sCfgItem *mItem;
