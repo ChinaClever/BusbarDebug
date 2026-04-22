@@ -28,6 +28,7 @@ void Dev_SiCfg::initType()
     ptr->si_phaseflag = read("si_phaseflag", 0).toInt();
     ptr->si_cur_spec = read("si_curspec", 0).toInt();
     ptr->si_trip = read("si_trip", 0).toInt();
+    ptr->si_loop = read("si_loop",0).toInt();
 
     //温度阈值
     ptr->tem_buzzer = read("tem_buzzer",0).toInt();
@@ -52,6 +53,7 @@ void Dev_SiCfg::writeType()
     write("si_phaseflag", ptr->si_phaseflag);
     write("si_curspec",ptr->si_cur_spec);
     write("si_trip",ptr->si_trip);
+    write("si_loop",ptr->si_loop);
 
     //温度阈值
     write("tem_buzzer", ptr->tem_buzzer);

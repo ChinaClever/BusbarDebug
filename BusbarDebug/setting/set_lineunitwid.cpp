@@ -144,11 +144,15 @@ void Set_LineUnitWid::on_curMaxSpin_valueChanged(double arg1)
     sObjCfg *obj = mCfg;
     double val = ui->curMaxSpin->value();
     ui->powMaxSpin->setValue(val*220.0/obj->pow.rate);
-    ui->totalpowMaxSpin->setValue(val*220.0*3/obj->pow.rate);
+
     if(mIndex == INSERT_BUSBAR && mDev->cfg.si_phaseflag==1){
         ui->powOutputMaxSpin->setValue(val*220.0*3/obj->pow.rate);
+        ui->totalpowMaxSpin->setValue(val*220.0*mDev->cfg.si_loop/obj->pow.rate);
     }else if(mIndex == INSERT_BUSBAR && mDev->cfg.si_phaseflag==0){
         ui->powOutputMaxSpin->setValue(val*220.0/obj->pow.rate);
+        ui->totalpowMaxSpin->setValue(val*220.0*3/obj->pow.rate);
+    }else if(mIndex == START_BUSBAR){
+        ui->totalpowMaxSpin->setValue(val*220.0*3/obj->pow.rate);
     }
 }
 

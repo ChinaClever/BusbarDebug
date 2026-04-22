@@ -331,6 +331,7 @@ struct sTypeCfg
     uchar si_buzzer;
     uchar si_filter;
     uchar si_phaseflag;//单相或者是三相
+    uchar si_loop;//单相或者是三相
     uchar si_cur_spec;
     uchar si_trip;
     sObjCfg si_cfg;

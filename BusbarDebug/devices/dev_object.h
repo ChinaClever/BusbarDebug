@@ -124,7 +124,7 @@ struct Rtu_recv {
     unsigned long long totalApPow;//   总视在功率
     uint totalEle;//总电能
     ushort crc; // 检验码
-    uchar phaseFlag; // 防雷开关
+    uchar phaseFlag; // 防雷开关？单三相
 };
 
 class Dev_Object : public BaseThread

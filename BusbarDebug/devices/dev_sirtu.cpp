@@ -627,7 +627,7 @@ int Dev_SiRtu::rtu_plug_recv_totaldata_output_data(uchar *ptr, Rtu_recv *msg)
         msg->outputXPow[i].ivalue = (*ptr) * 256 + *(ptr+1); ptr+=2;len+=2;
         msg->outputXPow[i].ivalue  <<= 16;
         msg->outputXPow[i].ivalue += (*ptr) * 256 + *(ptr+1); ptr+=2;len+=2;
-        msg->outputXPow[i].ialarm += (*ptr) * 256 + *(ptr+1); ptr+=2;len+=2;
+        msg->outputXPow[i].ialarm = (*ptr) * 256 + *(ptr+1); ptr+=2;len+=2;
         msg->outputXApPow[i].ivalue = (*ptr) * 256 + *(ptr+1); ptr+=2;len+=2;
         msg->outputXApPow[i].ivalue  <<= 16;
         msg->outputXApPow[i].ivalue += (*ptr) * 256 + *(ptr+1); ptr+=2;len+=2;

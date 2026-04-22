@@ -42,6 +42,9 @@ void Set_SiWid::initType()
     ui->phaseBox->setCurrentIndex(dt->si_phaseflag);
     ui->curSpecBox->setCurrentIndex(dt->si_cur_spec);
     ui->tripBox->setCurrentIndex(dt->si_trip);
+    if(dt->si_loop == 3)ui->loopBox->setCurrentIndex(0);
+    else if(dt->si_loop == 6)ui->loopBox->setCurrentIndex(1);
+    else if(dt->si_loop == 9)ui->loopBox->setCurrentIndex(2);
 }
 
 void Set_SiWid::updateType()
@@ -54,6 +57,7 @@ void Set_SiWid::updateType()
     dt->si_phaseflag = ui->phaseBox->currentIndex();
     dt->si_cur_spec = ui->curSpecBox->currentIndex();
     dt->si_trip = ui->tripBox->currentIndex();
+    dt->si_loop = ui->loopBox->currentIndex()==0?3:(ui->loopBox->currentIndex()==1?6:9);
 }
 
 bool Set_SiWid::inputCheck()
