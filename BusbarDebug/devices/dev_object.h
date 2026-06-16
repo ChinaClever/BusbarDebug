@@ -125,6 +125,7 @@ struct Rtu_recv {
     uint totalEle;//总电能
     ushort crc; // 检验码
     uchar phaseFlag; // 防雷开关？单三相
+    ushort boxId[3];
 };
 
 class Dev_Object : public BaseThread

@@ -937,12 +937,13 @@ void Ad_Resulting::compareInsertLineValue()
             .arg(v).arg(str).arg(curValue/rate).arg(expect/rate).arg(r);
     updatePro(info,ret);ret = false;
 
+    v = tr("有功功率");
     for(int i = 0 ; i < 3 ; i++){
         expect = it->outputpow.max*it->pow.rate;
         curValue = boxPowData->outputXBox.outputXPow[i].imax;
         if(curValue == expect) ret = true;
-        info = tr("插接箱%1 %2实际值：%3 %5, 期待值：%4 %5！")
-                .arg(v).arg(str).arg(curValue/rate).arg(expect/rate).arg(r);
+        info = tr("插接箱%1%6 %2实际值：%3 %5, 期待值：%4 %5！")
+                .arg(v).arg(str).arg(curValue/rate).arg(expect/rate).arg(r).arg(i+1);
         updatePro(info,ret);ret = false;
     }
 }

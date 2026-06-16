@@ -184,6 +184,7 @@ void Td_ThresholdTabWid::setDataUnit(sBoxData *unit)
     listStr1 << "---"<< "---";
     setTableRow(5, listStr1);
 
+    rate = COM_RATE_POW;suffix = "kW";r = 3;
     int index = 3, outputNum = 3;
     for(int i = 0 ; i < 3 ; i++){
         str = tr("Output%1 有功功率").arg(i+1);

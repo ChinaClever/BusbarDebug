@@ -184,7 +184,7 @@ bool Dev_SiCtrl::rtu_sent_uintV3_buff(uchar addr, ushort reg, uint num,  uint va
 bool Dev_SiCtrl::rtu_sent_single_uintV3_buff(uchar addr, ushort reg, uint num,  uint val)
 {
     bool ret = true;
-    Rtu_Sent_Uint_V3 msg;
+    Rtu_Sent_Single_Uint_V3 msg;
 
     msg.addr = addr;
     msg.fn   = 0x10;

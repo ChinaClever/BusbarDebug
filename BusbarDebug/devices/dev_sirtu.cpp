@@ -29,6 +29,16 @@ void Dev_SiRtu::initRtuItem(Rtu_Sent &it)
     it.reg = 0;
 }
 
+int Dev_SiRtu::rtu_recv_init_id(uchar *ptr, Rtu_recv *msg)
+{
+    uint len = 0;
+    msg->boxId[0] = (*ptr) * 256 + *(ptr+1); ptr+=2;len+=2;//
+    msg->boxId[1] = (*ptr) * 256 + *(ptr+1); ptr+=2;len+=2;//
+    msg->boxId[2] = (*ptr) * 256 + *(ptr+1); ptr+=2;len+=2;//
+    return len;
+}
+
+
 
 /**
   * 功　能：长度 校验
@@ -202,6 +212,9 @@ void Dev_SiRtu::initData(sBoxData *box, Rtu_recv *pkt)
     box->boxType = pkt->boxType;
     box->phaseFlag = pkt->phaseFlag;
     box->shuntRelease = pkt->shuntRelease;
+    box->boxId[0] = pkt->boxId[0];
+    box->boxId[1] = pkt->boxId[1];
+    box->boxId[2] = pkt->boxId[2];
 }
 
 void Dev_SiRtu::thdDataV3(Rtu_recv *pkt)
@@ -240,6 +253,9 @@ void Dev_SiRtu::outputAndTotalInitData(sBoxData *box, Rtu_recv *pkt)
         box->outputXBox.outputXEle[i] = pkt->outputXEle[i];
         box->outputXBox.outputXApPow[i].ivalue = pkt->outputXApPow[i].ivalue;
     }
+    box->totalPow.ivalue = pkt->totalPow.ivalue;
+    box->totalPow.imax = pkt->totalPow.imax;
+    box->totalApPow = pkt->totalApPow;
     box->totalEle = pkt->totalEle;
 }
 
@@ -658,21 +674,23 @@ bool Dev_SiRtu::rtu_recv_packetV3(uchar *buf, int len, Rtu_recv *pkt)
         ptr += rtu_recv_head(ptr, pkt); //指针偏移0
         if( pkt->addr == 0x01 ){//始端箱
             ptr += rtu_start_recv_init(ptr , pkt);
-            ptr += 5*2;//保留
-            for(int i = 0 ; i < RTU_LINE_NUM ; ++i) // 读取相 数据
-                ptr += rtu_start_recv_line_data(ptr , pkt , i);
-            ptr += rtu_start_recv_other_data(ptr , pkt);
+            ptr += (40-14)*2;//保留
             for(int i = 0 ; i < RTU_TH_NUM ; ++i) // 读取温度 数据
                 ptr += rtu_start_recv_env_data(ptr , pkt , i);
-            for(int i = 0 ; i < RTU_LINE_NUM ; ++i) // 读取滤波 数据
+            ptr += rtu_start_recv_other_data(ptr , pkt);
+            ptr += (90-65)*2;//保留
+
+            for(int i = 0 ; i < RTU_LINE_NUM ; ++i) // 读取相 数据
+            {
+                ptr += rtu_start_recv_line_data(ptr , pkt , i);
                 ptr += rtu_start_recv_thd_data(ptr , pkt , i);
+                ptr += (200 - 172)*2;
+            }
             ptr += rtu_start_recv_some_alarm_data(ptr , pkt);
-            for(int i = 0 ; i < RTU_LINE_NUM ; ++i) // 读取滤波 数据
+            for(int i = 0 ; i < RTU_LINE_NUM ; ++i) // 读取阈值数据
                 ptr += rtu_start_recv_last_alarm_data(ptr , pkt , i);
-            int state = 1;
-            if( pkt->breaker == 1 ) state = 0;
             for(int i = 0 ; i < RTU_LINE_NUM ; ++i)
-                pkt->data[i].sw = state;// 更新始端箱断路器状态
+                pkt->data[i].sw = pkt->breaker;// 更新始端箱断路器状态
             pkt->lineNum = 3;
         }
         else{//插接箱
@@ -689,9 +707,9 @@ bool Dev_SiRtu::rtu_recv_packetV3(uchar *buf, int len, Rtu_recv *pkt)
                 ptr += rtu_plug_recv_loop_alarm_data(ptr , pkt , i);
             //ptr += rtu_plug_recv_zero_data(ptr , pkt);
             ptr+=2;
+            for(int i = 0 ; i < RTU_LOOP_NUM ; ++i) // 读取loop load数据
+                ptr += 2;
             if(pkt->plug_cur_spec == 1){
-                for(int i = 0 ; i < RTU_LOOP_NUM ; ++i) // 读取loop load数据
-                    ptr += 2;
                 for(int i = 0 ; i < RTU_LOOP_NUM ; ++i) // 读取loop high current数据
                     ptr += rtu_plug_recv_loop_high_cur_data(ptr , pkt , i);
                 for(int i = 0 ; i < RTU_LOOP_NUM ; ++i) // 读取loop high alram数据

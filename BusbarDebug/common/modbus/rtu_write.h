@@ -65,6 +65,17 @@ struct Rtu_Sent_Uint_V3 {
     ushort crc; // 表示CRC校验
 };
 
+struct Rtu_Sent_Single_Uint_V3 {
+    Rtu_Sent_Single_Uint_V3():fn(3),reg(0),num(2){} // 下位机有问题
+    uchar addr; // 表示从机地址码
+    uchar fn;  // 表示功能码
+    ushort reg; // 表示寄存器首地址
+    ushort num; // 表示寄存器个数
+    ushort val1; // 表示最小值低位
+    ushort val2; // 表示最小值高位
+    ushort crc; // 表示CRC校验
+};
+
 class Rtu_Write : public Rtu_Read
 {
     Q_OBJECT
@@ -76,6 +87,7 @@ public:
     bool write(Rtu_Sent_Single_Ushort_V3 &pkt);
     bool write(Rtu_Sent_Ushort_V3 &pkt);
     bool write(Rtu_Sent_Uint_V3 &pkt);
+    bool write(Rtu_Sent_Single_Uint_V3 &pkt);
 
 protected:
     int rtu_write_packet(Rtu_Sent_Single_Ushort_V3 *pkt, uchar *ptr);
@@ -83,6 +95,8 @@ protected:
 
     int rtu_sent_packet_uint_V3(Rtu_Sent_Uint_V3 *pkt, uchar *ptr);
     int rtu_sent_packet_ushort_V3(Rtu_Sent_Ushort_V3 *pkt, uchar *ptr);
+
+    int rtu_sent_packet_single_uint_V3(Rtu_Sent_Single_Uint_V3 *pkt, uchar *ptr);
 };
 
 typedef Rtu_Write RtuRw;

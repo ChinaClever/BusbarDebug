@@ -21,6 +21,8 @@ protected:
     int recvAcData(uchar *ptr, int line);
     int recvDcData(uchar *ptr, int line);
 
+    int rtu_recv_init_id(uchar *ptr, Rtu_recv *msg);
+
     bool rtu_recv_packetV3(uchar *buf, int len, Rtu_recv *pkt);
     int rtu_recv_head(uchar *ptr,  Rtu_recv *pkt);
     int rtu_recv_len(uchar *buf, int len , int rtn);

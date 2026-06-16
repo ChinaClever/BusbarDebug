@@ -334,6 +334,7 @@ struct sTypeCfg
     uchar si_loop;//单相或者是三相
     uchar si_cur_spec;
     uchar si_trip;
+    uchar si_insertId;//0:不设置MAC id 1:设置MAC id
     sObjCfg si_cfg;
 
     uchar ip_bytepassword;
@@ -655,6 +656,7 @@ typedef struct _sBoxData {
     uint totalEle;//总电能
     uint online1;
     uint online2;
+    uchar boxId[3];
 
     ushort rtuLen;
     //uchar rtuArray[SRC_DATA_LEN_MAX];
