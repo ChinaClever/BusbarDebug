@@ -122,18 +122,18 @@ bool Test_CoreThread::initFun()
 {
     updatePro(tr("即将开始"));
     bool ret = false;
-    if(mItem->modeId == 0){
+    if(mItem->modeId == START_BUSBAR){
         double set = 2.5;
         ret = mYc->powerOn(set);
         sleep(25);
         if(ret) ret = setDev();//设置序列号
-    }else if(mItem->modeId == 1){//插接箱
+    }else if(mItem->modeId == INSERT_BUSBAR){//插接箱
         ret = mYc->powerOn();
         sleep(5);
         if(ret) ret = setDev();//设置序列号
         // if(ret) ret = readDev();
     }
-    else if(mItem->modeId == 2){//温度传感器
+    else if(mItem->modeId == TEMPER_BUSBAR){//温度传感器
         ret = mYc->powerOn(0);
         sleep(5);
         if(ret) ret = setDev();//设置序列号

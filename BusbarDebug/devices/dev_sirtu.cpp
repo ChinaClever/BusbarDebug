@@ -674,11 +674,14 @@ bool Dev_SiRtu::rtu_recv_packetV3(uchar *buf, int len, Rtu_recv *pkt)
         ptr += rtu_recv_head(ptr, pkt); //指针偏移0
         if( pkt->addr == 0x01 ){//始端箱
             ptr += rtu_start_recv_init(ptr , pkt);
-            ptr += (40-14)*2;//保留
+            ptr += (35-14)*2;//保留
+            ptr += rtu_recv_init_id(ptr , pkt);
+            ptr += (40-38)*2;
             for(int i = 0 ; i < RTU_TH_NUM ; ++i) // 读取温度 数据
                 ptr += rtu_start_recv_env_data(ptr , pkt , i);
             ptr += rtu_start_recv_other_data(ptr , pkt);
-            ptr += (90-65)*2;//保留
+            ptr += (90-63)*2;//保留
+            //ptr += (90-65)*2;//保留
 
             for(int i = 0 ; i < RTU_LINE_NUM ; ++i) // 读取相 数据
             {
@@ -718,7 +721,7 @@ bool Dev_SiRtu::rtu_recv_packetV3(uchar *buf, int len, Rtu_recv *pkt)
                 ptr += 2*6*9;
             }
             ptr += rtu_plug_recv_totaldata_output_data(ptr , pkt);
-
+            ptr += rtu_recv_init_id(ptr , pkt);
 
         }
         pkt->crc = (buf[RTU_SENT_LEN_V30*2+6-1]*256) + buf[RTU_SENT_LEN_V30*2+6-2]; // RTU_SENT_LEN_V23*2+5

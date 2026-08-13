@@ -71,7 +71,7 @@ bool Ad_Resulting::powRangeByID(int i, int exValue, int cnt)
         mObj->cur.status[i] = Test_Pass;
     } else {
         ret = false;
-        if(cnt > 3) {
+        if(cnt > 5) {
             str += tr("错误");
             updatePro(str, ret, 1);
             mObj->cur.status[i] = Test_Fail;
@@ -95,7 +95,7 @@ bool Ad_Resulting::curRangeByID(int i, int exValue, int cnt)
         if(ret){str += tr("正常"); updatePro(str);}
     } else {
         ret = false;
-        if(cnt > 3) {
+        if(cnt > 5) {
             str += tr("错误");
             updatePro(str, ret, 0);
             mObj->cur.status[i] = Test_Fail;
@@ -154,7 +154,7 @@ bool Ad_Resulting::eachCurCheck(int k, int exValue)
     value = value*0.5;
     QString str = tr("校验数据: 期望电流%1A 功率%2kW").arg(exValue/AD_CUR_RATE).arg(value);
     updatePro(str);
-    for(int i=0; i<5; ++i) {
+    for(int i=0; i<7; ++i) {
         if(i) str += tr(" 第%1次").arg(i+1); //else delay(4);
         ret = curRangeByID(k, exValue, i);
         if(ret) break; else if(!delay(i+5)) break;
